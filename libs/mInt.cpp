@@ -26,12 +26,11 @@ class mInt{
     public:
     int x;
     mInt() : x(0){}
-    
+
     int absmod(ll in){
         if(in>=0)return in%mod;
         else return (in%mod)+mod;
     }
-
     mInt(ll in){x=absmod(in);}
 
     friend ostream &operator<<(ostream &os, const mInt &p) {return os << p.x;}
@@ -54,8 +53,16 @@ class mInt{
     mInt &operator=(const ll p){x = absmod(p);return *this;}
 
     mInt pow(ll n){
-        mInt ret(1);
+        mInt ret(1),tmp(x);
 
+        if(n==0)return ret;
+        else if(n<0)n+=mod-1;
+
+        while(n>1){
+            if(n%2==0){n/=2;tmp*=tmp;}
+            else {--n;ret*=tmp;}
+        }
+        ret *= tmp;return ret;
     }
 
     mInt operator+(const mInt &p)const{return mInt(*this) += p;}
@@ -69,8 +76,7 @@ class mInt{
 
 
 int main(){
-    mInt<100> md1(87186584),md2(54353413),md3(25452524);
-
+    
 
 
 

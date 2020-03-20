@@ -19,6 +19,10 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define db3(x,y,z) cerr<<"("<<#x<<", "<<#y<<", "<<#z<<") = ("<<x<<", "<<y<<", "<<z<<") ";
 #define ln cout<<endl;
 
+#define rep(i,n) for(int i=0,_i=(n);i<_i;++i)
+#define rep1(i,a,b) for(int a_=(a),b_=(b),i=a_;i<b_;++i)
+#define repr(i,n) for(int _i=(n),i=_i;i>0;--i)
+
 
 
 template<int mod=1000000007>
@@ -49,15 +53,14 @@ class mInt{
     }
 
     mInt &operator*=(const mInt p){x=(int)((ll)x*p.x % mod); return *this;}
-    mInt &operator/=(const mInt p){x*=p.pow(-1); return *this}
+    mInt &operator/=(const mInt p){x*=p.pow(-1); return *this;}
+    //mInt &operator=(const mInt p){x = p.x;return *this;}
     mInt &operator=(const ll p){x = absmod(p);return *this;}
 
     mInt pow(ll n){
         mInt ret(1),tmp(x);
-
         if(n==0)return ret;
         else if(n<0)n+=mod-1;
-
         while(n>1){
             if(n%2==0){n/=2;tmp*=tmp;}
             else {--n;ret*=tmp;}
@@ -76,11 +79,19 @@ class mInt{
 
 
 int main(){
-    
+    vector<mInt<100>>a(10);
+
+    rep(i,2)cin>>a[i];
+    ll a0=a[0].x;
+    ll a1=a[1].x;
+
+    cout<<a[0]<<"+"<<a[1]<<"="<<a[0]+a[1]<<" exact: "<< a0+a1 ;ln;
+    cout<<a[0]<<"*"<<a[1]<<"="<<a[0]*a[1]<<" exact: "<< a0*a1 ;ln;
+    cout<<a[0]<<"-"<<a[1]<<"="<<a[0]-a[1]<<" exact: "<< a0-a1 ;ln;
+    cout<<a[0]<<"**"<<a[1]<<"="<<a[0].pow(a[1].x)<<" exact: "<<  ;ln;
 
 
-
-
+    return 0;
 }
 
 

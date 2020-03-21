@@ -34,6 +34,8 @@ class mInt{
         else return (in%mod)+mod;
     }
     mInt(ll in){x=absmod(in);}
+    ~mInt(){}
+
 
     friend ostream &operator<<(ostream &os, const mInt &p) {return os << p.x;}
     friend istream &operator>>(istream &is, mInt &a) {
@@ -57,7 +59,7 @@ class mInt{
     mInt &operator=(const ll p){x = absmod(p);return *this;}
 
     mInt pow(ll n)const{
-        mInt ret(1),tmp(x);
+        mInt<mod> ret(1),tmp(x);
         if(n==0)return ret;
         else if(n<0)n+=mod-1;
 
@@ -70,25 +72,66 @@ class mInt{
 
     mInt operator+(const mInt &p)const{return mInt(*this) += p;}
     mInt operator-(const mInt &p)const{return mInt(*this) -= p;}
+    
     mInt operator*(const mInt &p)const{return mInt(*this) *= p;}
+    mInt operator*(const ll &p)const{mInt<mod>mp;mp.x=p;return mInt(*this) *= mp;}
+
     mInt operator/(const mInt &p)const{return mInt(*this) /= p;}
+
     bool operator==(const mInt &p)const{return x == p.x;}
     bool operator!=(const mInt &p)const{return x != p.x;}
+    bool operator>(const mInt &p)const{return x > p.x;}
+    bool operator<(const mInt &p)const{return x < p.x;}
+    bool operator>=(const mInt &p)const{return x >= p.x;}
+    bool operator<=(const mInt &p)const{return x <= p.x;}
+};
+
+template<int mod=1000000007>
+class mFact{
+    public:
+    int n;
+    mFact() : n(200000){}
+    mFact(int _n) : n(_n){}
+
+    vector<mInt<mod>>fac;
+    vector<mInt<mod>>fiv;
+
+    void prepareFactArray(){
+        fac.resize(n+10);
+        fiv.resize(n+10);
+
+        fac[0]=1;
+        for(int i=1;i<=n;++i)fac[i] = fac[i-1]*i;
+        
+        fiv[n]=fac[n].pow(-1);
+        for(int i=n;i>=0;--i)fiv[i-1] = fiv[i]*i;
+    }
+
+    mInt nCr(int _n,int r){
+        mInt<mod> ans(1);
+        if(_n > n){
+            
+        }else return ;
+    }
 };
 
 int main(){
-    mInt<13> m1(1);
-    vector<mInt<13>>a(10);
+    const int mod=1009;
+    mInt<mod> m1(1);
+    vector<mInt<mod>>a(10);
 
-    rep(i,2)cin>>a[i];
+    rep(i,10)cin>>a[i];
     ll a0=a[0].x;
     ll a1=a[1].x;
 
-    cout<<a[0]<<"+"<<a[1]<<"="<<a[0]+a[1]<<" exact: "<< a0+a1;ln;
+    cout<<'\n'<<a[0]<<"+"<<a[1]<<"="<<a[0]+a[1]<<" exact: "<< a0+a1;ln;
     cout<<a[0]<<"*"<<a[1]<<"="<<a[0]*a[1]<<" exact: "<< a0*a1;ln;
     cout<<a[0]<<"-"<<a[1]<<"="<<a[0]-a[1]<<" exact: "<< a0-a1;ln;
-    cout<<a[0]<<"**"<<a[1]<<"="<< a[0].pow(a[1].x) <<" exact: "<< pow(a0,a1);ln;
+    cout<<a[0]<<"**"<<a[1]<<"="<< a[0].pow(a[1].x);ln;
     cout<<a[0]<<"/"<<a[1]<<"="<< a[0]/a[1] <<" (a[0]/a[1])*a[1] = "<<((a[0]/a[1])*a[1]);ln;
+
+    sort(all(a));
+    for(auto ai:a)cout<<ai.x<<" ";ln;
 
     return 0;
 }

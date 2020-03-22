@@ -90,8 +90,8 @@ template<int mod=1000000007>
 class mFact{
     public:
     int n;
-    mFact() : n(200000){}
-    mFact(int _n) : n(_n){}
+    mFact() : n(1000){prepareFactArray();}
+    mFact(int _n) : n(_n){prepareFactArray();}
 
     vector<mInt<mod>>fac;
     vector<mInt<mod>>fiv;
@@ -102,24 +102,44 @@ class mFact{
 
         fac[0]=1;
         for(int i=1;i<=n;++i)fac[i] = fac[i-1]*i;
-        
+
         fiv[n]=fac[n].pow(-1);
         for(int i=n;i>=0;--i)fiv[i-1] = fiv[i]*i;
     }
 
-    mInt nCr(int _n,int r){
-        mInt<mod> ans(1);
+    
+    mInt<mod> nCr(ll _n,ll r){
+        mInt<mod> p(1),q(1);
+        r=min(r,_n-r);
         if(_n > n){
-            
-        }else return ;
+            for(ll i=0;i<r;++i){p*=_n-i;q*=r-i;}
+            return p/q;
+        }
+        else return fac[_n]*fiv[r]*fiv[_n-r];
     }
+    //*/
 };
 
 int main(){
-    const int mod=1009;
+    const int mod=1000000007;
     mInt<mod> m1(1);
-    vector<mInt<mod>>a(10);
+    //vector<mInt<mod>>a(10);
 
+    int n;
+    cin>>n;
+    mFact<mod> f(n);
+
+    ll a=1,b=1;
+    while(a != -1){
+        cin>>a>>b;
+
+        cout<<" fac[x]="<<f.fac[a];
+        cout<<" fac[y]="<<f.fac[b];
+
+        cout<<" xCy = "<<(f.nCr(a,b))<<'\n';
+    }
+
+    /*
     rep(i,10)cin>>a[i];
     ll a0=a[0].x;
     ll a1=a[1].x;
@@ -132,6 +152,7 @@ int main(){
 
     sort(all(a));
     for(auto ai:a)cout<<ai.x<<" ";ln;
+    */
 
     return 0;
 }

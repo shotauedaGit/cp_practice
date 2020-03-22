@@ -120,15 +120,19 @@ class mFact{
     //*/
 };
 
+
 int main(){
     const int mod=1000000007;
-    mInt<mod> m1(1);
+    mInt<mod> m2(2);
     //vector<mInt<mod>>a(10);
 
-    int n;
-    cin>>n;
-    mFact<mod> f(n);
+    int n,a,b;
+    cin>>n>>a>>b;
+    mFact<mod> f(200000);
 
+    cout<< ((m2.pow(n)-1) - f.nCr(n,a) - f.nCr(n,b));
+
+    /*
     ll a=1,b=1;
     while(a != -1){
         cin>>a>>b;
@@ -138,6 +142,7 @@ int main(){
 
         cout<<" xCy = "<<(f.nCr(a,b))<<'\n';
     }
+    */
 
     /*
     rep(i,10)cin>>a[i];

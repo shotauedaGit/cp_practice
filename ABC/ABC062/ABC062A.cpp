@@ -42,16 +42,29 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int x,y;
+    cin>>x>>y;
 
+    map<int,int> gl;
 
-    cout<<ans<<endl;
+    gl[1]=1;
+    gl[3]=1;
+    gl[5]=1;
+    gl[7]=1;
+    gl[8]=1;
+    gl[10]=1;
+    gl[12]=1;
 
+    gl[4]=2;
+    gl[6]=2;
+    gl[9]=2;
+    gl[11]=2;
+
+    gl[2]=3;
     //cout <<fixed<<setprecision(16)<< << endl;
 
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(gl[x] == gl[y])cout << "Yes" <<endl;
+    else cout << "No" <<endl;
 
     return 0;
 }

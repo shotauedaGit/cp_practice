@@ -48,47 +48,92 @@ int main(){
 
     rep(i,h)cin>>g[i];
 
+    bool dbM=false;
 
-    rep(i,(1<<h-1)){
+    rep(i,(1<<h-1)){ //水平方向の割りかた全探索
+        ll tmp=0;
+        
+        int cur=i;
+        vector<int> gl(h);gl[0]=0;
 
-        int p=i,gr=1;
+        if(dbM)cout<<"pat:   "<<i<<endl;
+        rep(j,h-1){ //グループ分け
 
-        vector<int>hdiv(h);
-        vector<int>vdivpos(w);
+            if(dbM)cout<<j+1<<endl;
 
-        rep(k,h-1){
-            if(p%2){hdiv[k]=gr;++gr;}
-            else hdiv[k]=gr;
-        }
-        hdiv[h-1]=gr;
-
-        vector<int> whcnt(gr,0);
-        int j=0;
-        int divcnt=gr;
-
-        bool done=true;
-        while(j<w){
-            rep(k,h)if(g[k][j]=='1')whcnt[hdiv[k]]++;
-
-            bool safe=true;
-            rep(k,gr)if(whcnt[k]>klim)safe=false;
-
-            if(!safe){
-                if(!vdivpos.empty() && vdivpos.back() == j-1){done=false;break;}
-
-                fill(all(whcnt),0);
-                vdivpos.eb(j);
-                divcnt++;
+            if(cur%2){
+                ++tmp;
+                gl[j+1]=gl[j]+1;
+                if(dbM)cout<<" =>"<<endl;
+            }else{
+                gl[j+1]=gl[j];
             }
 
-            ++j;
+            cur /= 2;
         }
+        if(dbM)cout<<h<<"\n\n";
 
-        if(done)chmin(ans,divcnt);
+        int Glnum=tmp+1;
+
+        vector<int>WhCnt(Glnum);
+        vector<int>curWhCnt(Glnum);
+
+        bool cont=false;
+        bool div=false;
+
+
+        int curWidth=0;
+        rep(j,w){//横方向にみていく、毎回、そこに切れ目を入れるべきか判断
+
+            fill(all(curWhCnt),0);
+            rep(k,h){
+                if(g[k][j]=='1'){
+                    ++curWhCnt[gl[k]];
+                }
+            }
+
+            cont=false;div=false;
+
+            if(dbM)cout<<" ( ";
+            rep(p,Glnum){
+                
+                int WhC=curWhCnt[p]+WhCnt[p];
+                if(dbM)db2(p,WhC);
+
+                if(WhC > klim){
+                    div=true;
+                    
+                    rep(p,Glnum)if(curWhCnt[p]>klim)cont=true;
+
+                }
+            }
+            if(dbM)cout<<"  ) ";
+            if(cont){
+                if(dbM)cout<<"cont at "<<j;
+                break;//積んでいたら途中でも中断
+
+            }
+
+            if(div){
+                curWidth=0;
+                fill(all(WhCnt),0);
+                ++tmp;
+                if(dbM)cout<<"dvided"<<endl;
+            }else{
+                curWidth++;
+                if(dbM)ln;
+            }
+
+            rep(p,Glnum)WhCnt[p]+=curWhCnt[p];
+        }
+        if(dbM)ln;
+
+        if(cont){
+            continue;
+        }//水平方向の別の割り方を試しに行く 
+
+        chmin(ans,tmp);
     }
-
-    //cout <<fixed<<setprecision(16)<< << endl;
-    
     cout<<ans<<endl;
     
     //if(flag)cout << "Yes" <<endl;

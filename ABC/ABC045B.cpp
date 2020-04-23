@@ -40,15 +40,39 @@ int dy[4]={0,1,0,-1};
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
+    char ans;
 
-    string s;
-    cin>>s;
+    string a,b,c;
+    queue<char> qa,qb,qc;
+    cin>>a>>b>>c;
 
-    rep(i,s.length()-1){
-        if(s[i]!=s[i+1])ans++;
+    rep(i,a.length())qa.push(a[i]);
+    rep(i,b.length())qb.push(b[i]);
+    rep(i,c.length())qc.push(c[i]);
+
+    int turn=0;
+    bool fin=false;
+
+    while(!fin){
+        char now;
+        
+        //db2(now,turn);
+        //db3(qa.size(),qb.size(),qc.size());ln;
+
+        switch(turn){
+            case 0: if(qa.empty()){fin=true;ans='A';} now=qa.front();qa.pop();break;
+            case 1: if(qb.empty()){fin=true;ans='B';} now=qb.front();qb.pop();break;
+            case 2: if(qc.empty()){fin=true;ans='C';} now=qc.front();qc.pop();break;
+            default : break;
+        }
+
+        switch(now){
+            case 'a':turn=0;break;
+            case 'b':turn=1;break;
+            case 'c':turn=2;break;
+            default : break;
+        }
     }
-
     cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
@@ -58,7 +82,3 @@ int main(){
 
     return 0;
 }
-
-
-
-// BBBB,WW,BB,W,B,W,B,W,B,W,B,W,B,WW,BBB

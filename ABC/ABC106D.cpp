@@ -42,14 +42,28 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    int n,m,q;
+    cin>>n>>m>>q;
+    vector<vector<int>> sect(n);
 
-    rep(i,s.length()-1){
-        if(s[i]!=s[i+1])ans++;
+    rep(i,m){
+        int l,r;
+        cin>>l>>r;
+        --l;--r;
+        sect[l].emplace_back(r);
     }
+    rep(i,n)sort(all(sect[i]));
 
-    cout<<ans<<endl;
+    rep(i,q){
+        int pi,qi;
+        cin>>pi>>qi;
+        --pi;--qi;
+
+        int qans=0;
+        rep1(j,pi,qi+1)qans += upper_bound(all(sect[j]),qi)-sect[j].begin();
+
+        cout<<qans<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
 
@@ -58,7 +72,3 @@ int main(){
 
     return 0;
 }
-
-
-
-// BBBB,WW,BB,W,B,W,B,W,B,W,B,W,B,WW,BBB

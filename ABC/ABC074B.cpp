@@ -42,12 +42,9 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    int n,m;
+    cin>>n;
 
-    rep(i,s.length()-1){
-        if(s[i]!=s[i+1])ans++;
-    }
 
     cout<<ans<<endl;
 
@@ -58,7 +55,3 @@ int main(){
 
     return 0;
 }
-
-
-
-// BBBB,WW,BB,W,B,W,B,W,B,W,B,W,B,WW,BBB

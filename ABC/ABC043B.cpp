@@ -38,19 +38,26 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
-
     bool flag=false;
-    ll ans=0,sum=0;
-
     string s;
     cin>>s;
+    stack<char> st;
 
-    rep(i,s.length()-1){
-        if(s[i]!=s[i+1])ans++;
+    rep(i,s.length()){
+        if(s[i] == 'B'){
+            if(!st.empty())st.pop();
+        }else{
+            st.push(s[i]);
+        }
+    }
+
+    string ans="";
+    while(!st.empty()){
+        ans = st.top()+ans;
+        st.pop();
     }
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
 
     //if(flag)cout << "Yes" <<endl;
@@ -58,7 +65,3 @@ int main(){
 
     return 0;
 }
-
-
-
-// BBBB,WW,BB,W,B,W,B,W,B,W,B,W,B,WW,BBB

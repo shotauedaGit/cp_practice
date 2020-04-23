@@ -40,13 +40,24 @@ int dy[4]={0,1,0,-1};
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
+    ll ans=LINF,sum=0;
 
-    string s;
-    cin>>s;
+    int n,m;
+    cin>>n;
+    vector<int> a(n);
 
-    rep(i,s.length()-1){
-        if(s[i]!=s[i+1])ans++;
+    rep(i,n)cin>>a[i];
+
+    bool same=true;
+    rep(i,n-1)if(a[i+1]!=a[i])same=false;
+    if(same){cout<<0<<endl;return 0;}
+
+    for(int i=-100;i<=100;++i){
+        int y=i;
+        int tmp=0;
+
+        rep(j,n)tmp+=(a[j]-y)*(a[j]-y);
+        chmin(ans,tmp);
     }
 
     cout<<ans<<endl;
@@ -58,7 +69,3 @@ int main(){
 
     return 0;
 }
-
-
-
-// BBBB,WW,BB,W,B,W,B,W,B,W,B,W,B,WW,BBB

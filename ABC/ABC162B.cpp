@@ -42,10 +42,13 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    int n;
     cin>>n;
 
-
+    rep(i,n){
+        if((i+1)%3==0 || (i+1)%5==0)continue;
+        else ans += i+1;
+    }
     cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;

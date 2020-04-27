@@ -42,15 +42,16 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
 
-    cout<<n*(n+1)/2<<endl;
+    int t = (c+b-1)/b;
+    int ao= (a+d-1)/d;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(t <= ao)cout << "Yes" <<endl;
+    else cout << "No" <<endl;
 
     return 0;
 }

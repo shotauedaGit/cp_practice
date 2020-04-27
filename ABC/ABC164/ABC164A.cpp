@@ -42,15 +42,13 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
-
-    cout<<n*(n+1)/2<<endl;
+    int s,w;
+    cin>>s>>w;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(w >= s)cout << "unsafe" <<endl;
+    else cout << "safe" <<endl;
 
     return 0;
 }

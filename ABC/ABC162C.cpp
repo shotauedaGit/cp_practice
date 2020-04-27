@@ -42,14 +42,19 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int kk;
+    cin>>kk;
 
+    rep1(i,1,kk+1){
+        rep1(j,1,kk+1){
+            rep1(k,1,kk+1){
+                ans += gcd(gcd(i,j),k);
+            }
+        }
+    }
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

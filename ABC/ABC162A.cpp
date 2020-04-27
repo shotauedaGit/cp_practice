@@ -45,13 +45,18 @@ int main(){
     int n,m;
     cin>>n;
 
+    int p=n%10;n/=10;
+    int q=n%10;n/=10;
+    int r=n%10;
 
-    cout<<ans<<endl;
+    if(p==7||q==7||r==7)flag=true;
+    else flag=false;
+
 
     //cout <<fixed<<setprecision(16)<< << endl;
 
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(flag)cout << "Yes" <<endl;
+    else cout << "No" <<endl;
 
     return 0;
 }

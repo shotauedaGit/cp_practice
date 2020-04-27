@@ -45,7 +45,16 @@ int main(){
     int n,m;
     cin>>n;
 
-    cout<<n*(n+1)/2<<endl;
+
+    map<string,int> ss;
+
+    rep(i,n){
+        string s;
+        cin>>s;
+        ss[s]++;
+    }
+
+    cout<< ss.size() <<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

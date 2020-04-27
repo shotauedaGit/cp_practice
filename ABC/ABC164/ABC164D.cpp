@@ -3,6 +3,7 @@ using namespace std;
 
 #define INF 1001001001
 #define LINF 1001001001001001001
+#define LINF2 10010010010010
 #define MOD 1000000007
 #define MOD2 998244353
 
@@ -37,18 +38,57 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    string s;
+    cin>>s;
 
-    cout<<n*(n+1)/2<<endl;
+    int n=s.length();
 
+    vector<int> modP(n+1,0);
+
+    
+    int ten = 1;
+    int modC = 0;
+
+    rep(i,n){
+        // cout<<s[n-1-i];ln;
+
+        int add = (s[n-1-i] - '0');
+        add = (add*ten)%2019;
+
+        modC = (modC+add)%2019;
+        modP[i+1] = modC;
+
+        ten*=10;
+        ten%=2019;
+    }
+
+    /*
+    rep(i,n+1){
+        string subs = s.substr(n-i,i+1);
+        cout<<subs<<" % 2019 == "<<modP[i]<<endl;
+    }
+    */
+
+    map<int,int>mfreq;
+
+    for(int ai:modP)mfreq[ai]++;
+
+    for(auto p:mfreq){
+        //cout<<p.fi<<" "<<p.se<<endl;
+        ll freq = p.se;
+
+        ans += freq*(freq-1)/2;
+    }
+
+    cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

@@ -45,7 +45,8 @@ int main(){
     int n,m;
     cin>>n;
 
-    cout<<n*(n+1)/2<<endl;
+
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

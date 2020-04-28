@@ -38,18 +38,20 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
 
     int n,m;
     cin>>n;
 
-    //cout <<fixed<<setprecision(16)<< << endl;
-    
+
     cout<<ans<<endl;
-    
+
+    //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
+
     return 0;
 }

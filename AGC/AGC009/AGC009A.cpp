@@ -41,28 +41,20 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    ll x,y;
-    cin>>x>>y;
-    ll abx = abs(x);
-    ll aby = abs(y);
+    int n,m;
+    cin>>n;
+    vector<int>a(n);
+    vector<int>b(n);
 
-    if(x<=y){
-        if(abx*aby == x*y)ans = y-x;
-        else ans = abs(aby-abx)+1;
-    }else{
-        if(abx*aby == x*y){
-            ans = x-y+2;
-            if(x==0 || y==0)--ans;
-        }
-        else ans = abs(abx-aby)+1;
+    rep(i,n)cin>>a[i]>>b[i];
+    rep(i,n){
+        int r=n-i-1;
+        if((a[r]+ans)%b[r] != 0)ans+=b[r] - (a[r]+ans)%b[r];
     }
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

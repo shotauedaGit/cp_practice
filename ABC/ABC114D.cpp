@@ -38,16 +38,71 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin >>n;
+    int n;
+    cin>>n;
 
-    //cout <<fixed<<setprecision(16)<< << endl;
+    vector<int> primelist;
+    rep1(i,2,n+1){
+        bool isprime = true;
+        rep1(j,2,i-1){
+            if(i%j == 0)isprime=false;
+        }
+        if(isprime)primelist.eb(i);
+    }
+
+    int nP = primelist.size();
+    vector<int> exp;
+
+    for(int p:primelist){
+        int pf = p;
+        int tmp=0;
+
+        while(pf <= n){
+            tmp += n/pf;
+            pf *= p;
+        }
+        exp.eb(tmp);
+    }
+
+
+    rep(i,nP)if(exp[i] >= 74)++ans;
+
+    int two=0,thr=0;
+    rep(i,nP){
+        rep1(j,i+1,nP){
+            if(i == j)continue;
+            int p = exp[i];
+            int q = exp[j];
+
+            if( (p >= 24&&q >= 2) )++two;
+            if( (p >= 14&&q >= 4) )++two;
+            if( (q >= 24&&p >= 2) )++two;
+            if( (q >= 14&&p >= 4) )++two;
+        }
+    }
+
+    rep(i,nP){
+        rep1(j,i+1,nP){
+            rep1(k,j+1,nP){
+                int p = exp[i];
+                int q = exp[j];
+                int r = exp[k];
+
+                if(p>=4&&q>=4&&r>=2)++thr;
+                if(p>=4&&q>=2&&r>=4)++thr;
+                if(p>=2&&q>=4&&r>=4)++thr;
+            }
+        }
+    }
+    ans += two + thr;
     cout<<ans<<endl;
+    //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
+
     return 0;
 }

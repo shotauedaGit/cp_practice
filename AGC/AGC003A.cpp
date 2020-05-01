@@ -38,31 +38,24 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
 
-    ll x,y;
-    cin>>x>>y;
-    ll abx = abs(x);
-    ll aby = abs(y);
+    string str;
+    cin>>str;
+    map<char,bool> d;
 
-    if(x<=y){
-        if(abx*aby == x*y)ans = y-x;
-        else ans = abs(aby-abx)+1;
-    }else{
-        if(abx*aby == x*y){
-            ans = x-y+2;
-            if(x==0 || y==0)--ans;
-        }
-        else ans = abs(abx-aby)+1;
-    }
+    d['N']=false;
+    d['S']=false;
+    d['E']=false;
+    d['W']=false;
 
-    cout<<ans<<endl;
+    rep(i,str.length())d[str[i]]=true;
 
-    //cout <<fixed<<setprecision(16)<< << endl;
-
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(d['N'] == d['S'] && d['W'] == d['E'])flag = true;
+    if(flag)cout << "Yes" <<endl;
+    else cout << "No" <<endl;
 
     return 0;
 }

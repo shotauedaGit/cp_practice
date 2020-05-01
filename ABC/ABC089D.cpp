@@ -38,24 +38,19 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
 
-    ll x,y;
-    cin>>x>>y;
-    ll abx = abs(x);
-    ll aby = abs(y);
+    int h,w,d;
+    cin>>h>>w>>d;
 
-    if(x<=y){
-        if(abx*aby == x*y)ans = y-x;
-        else ans = abs(aby-abx)+1;
-    }else{
-        if(abx*aby == x*y){
-            ans = x-y+2;
-            if(x==0 || y==0)--ans;
+    rep(i,h){
+        rep(j,w){
+            
         }
-        else ans = abs(abx-aby)+1;
     }
+
 
     cout<<ans<<endl;
 

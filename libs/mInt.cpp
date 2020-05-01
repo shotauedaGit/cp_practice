@@ -107,9 +107,10 @@ class mFact{
         for(int i=n;i>=0;--i)fiv[i-1] = fiv[i]*i;
     }
 
-    
     mInt<mod> nCr(ll _n,ll r){
-        mInt<mod> p(1),q(1);
+        mInt<mod> p(1),q(1),z(0);
+        if(r > _n)return z;
+
         r=min(r,_n-r);
         if(_n > n){
             for(ll i=0;i<r;++i){p*=_n-i;q*=r-i;}

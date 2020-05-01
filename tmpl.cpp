@@ -28,8 +28,10 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
-typedef pair<int,int> pii;
-typedef pair<pii,pii> ppii;
+
+typedef pair<int,int> P;
+typedef pair<int,P> iP;
+typedef pair<P,P> PP;
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}

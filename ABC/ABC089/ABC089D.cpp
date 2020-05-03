@@ -28,8 +28,11 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
-typedef pair<int,int> pii;
-typedef pair<pii,pii> ppii;
+
+typedef pair<int,int> P;
+typedef pair<int,P> iP;
+typedef pair<P,P> PP;
+
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
@@ -45,19 +48,53 @@ int main(){
     int h,w,d;
     cin>>h>>w>>d;
 
+    vector<vector<int>> mgp(d);
+    vector<P> pos(h*w);
+
     rep(i,h){
         rep(j,w){
-            
+            int ai;
+            cin>>ai;--ai;
+            pos[ai] = P(i,j);
         }
     }
 
+    rep(i,d){
+        int p=i;
+        mgp[i].eb(0);
 
-    cout<<ans<<endl;
+        while(p+d < h*w){
+            p += d;
 
+            int cost = abs(pos[p-d].fi - pos[p].fi) + abs(pos[p-d].se - pos[p].se);
+            mgp[i].eb( mgp[i].back() + cost );
+        }
+    }
+
+    /*
+    rep(i,d){
+        cout<<"mod :"<<i<<"  ";
+        for(int num :mgp[i])cout<<num<<" ";
+        ln;
+    }
+    */
+
+    int q;
+    cin>>q;
+
+    rep(i,q){
+        int l,r;
+        cin>>l>>r;
+        --l;--r;
+
+        int md = l%d;
+        int st = (l-md)/d;
+        int ed = (r-md)/d;
+
+        cout << mgp[md][ed] - mgp[md][st]<<endl;
+    }
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

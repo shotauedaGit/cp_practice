@@ -22,14 +22,15 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define rep1(i,a,b) for(int a_=(a),b_=(b),i=a_;i<b_;++i)
 #define repr(i,n) for(int _i=(n),i=_i;i>0;--i)
 
-class einfo{
+class edge{
 
-    einfo();
-
+    edge();
     int frm;
     int to;
     int cost;
 };
+
+
 
 class Graph{
     public:

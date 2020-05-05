@@ -39,77 +39,21 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-
-struct tree{
-
-    int nV;
-
-    vector<vector<int>> g;
-    vector<int> a;
-
-    vector<int> ans;
-    
-    tree(int n){
-        nV = n;
-
-        g.resize(n);
-        a.resize(n);
-
-        ans.resize(n);
-        fill(all(ans),0);
-
-        rep(i,n)cin>>a[i];
-
-        rep(i,n-1){
-            int v,u;
-            cin>>u>>v;
-            --u;--v;
-
-            g[u].eb(v);
-            g[v].eb(u);
-        }
-    }
-
-    void solve(){
-        bfs(-1,0,1);
-        rep(i, nV )cout<<ans[i]<<endl;
-    }
-
-    void bfs(int prev,int now,int curstreak){
-        
-        if(prev != -1 && a[prev] < a[now]){
-        
-            curstreak++;
-            ans[now] = max(ans[prev],curstreak);
-        
-        }else if(prev!=-1){
-        
-            curstreak=1;
-            ans[now] = ans[prev];
-        
-        }else{
-            ans[now] = curstreak;
-        }
-
-        rep(i , g[now].size()){
-            int nex = g[now][i];
-            if(nex == prev)continue;
-
-            bfs(now,nex,curstreak);
-        }
-    }
-
-};
-
 int main(){
+
+    bool flag=false;
+    ll ans=0,sum=0;
 
     int n,m;
     cin>>n;
-    tree tr(n);
-    tr.solve();
+
+
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

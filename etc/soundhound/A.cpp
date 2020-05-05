@@ -44,16 +44,13 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
-
-
-    cout<<ans<<endl;
+    int a,b;
+    cin>>a>>b;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(a+b==15)cout << "+" <<endl;
+    else if(a*b == 15)cout << "*" <<endl;
+    else cout << "x" <<endl;
 
     return 0;
 }

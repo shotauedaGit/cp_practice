@@ -42,17 +42,28 @@ int dy[4]={0,1,0,-1};
 int main(){
 
     bool flag=false;
-    long double ans=0,d,n,m;
-    cin>>n>>m>>d;
+    ll ans=0,sum=0;
 
-    if(d == 0){
-        ans = (m-1)/n;
-    }else{
-        ans = (m-1)*(((n-d)*2)/(n*n));
+    int n,h;
+    cin>>n>>h;
+    vector<int> a(n),b(n);
+
+    rep(i,n){
+        cin>>a[i]>>b[i];
     }
+
+    sort(all(a),greater<int>());
+    sort(all(b),greater<int>());
+
     
-    cout <<fixed<<setprecision(16)<<ans << endl;
+
+
+    cout<<ans<<endl;
+
+    //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

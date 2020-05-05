@@ -39,19 +39,43 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+void kousei(int st,int p,vector<P>& a){
+        //cout<<"kousei ..."<<st<<" to "<<st+p<<endl;
+
+        rep(i,p-1){
+            a[st+i].fi = st+i+1;
+            a[st+i+1].se = st+i+1;
+        }
+        a[st].se = st+p;
+        a[st+p-1].fi = st+p;
+}
+
 int main(){
 
     bool flag=false;
-    long double ans=0,d,n,m;
-    cin>>n>>m>>d;
+    ll ans=0,sum=0;
 
-    if(d == 0){
-        ans = (m-1)/n;
+    int n,m;
+    cin>>n;
+
+    int c = n,cnt=0;
+    while(c%2==0){c/=2;++cnt;}
+
+    if( c>1 ){
+        vector<P> a(n,P(0,0));
+        puts("Yes");
+        cout<<n<<endl;
+
+        rep(i,(1<<cnt)){
+            kousei(i*c,c,a);
+        }
+
+        rep(i,n)cout<<2<<" "<<a[i].fi<<" "<<a[i].se<<endl;
     }else{
-        ans = (m-1)*(((n-d)*2)/(n*n));
+        puts("No");
     }
-    
-    cout <<fixed<<setprecision(16)<<ans << endl;
+
+    //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
     return 0;

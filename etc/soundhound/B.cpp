@@ -24,6 +24,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define pb push_back
 #define eb emplace_back
 #define mp make_pair
+
 #define se second
 #define fi first
 
@@ -42,18 +43,19 @@ int dy[4]={0,1,0,-1};
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    string s,ans;
+    int w;
+    cin>>s>>w;
 
+    rep(i,s.length()){
+        ans.pb(s[i]);
+        i += w-1;
+    }
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

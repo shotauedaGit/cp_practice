@@ -153,8 +153,8 @@ class Graph{
         return dist;
     }
 
-    vector< vector<int> > warshall_floyid(){
-        vector< vector<int> > dist(nV,vector<int>(nV,INF));
+    vector< vector<ll> > warshall_floyid(){//NEGCYCLE => (returns EMPTY vector)
+        vector< vector<ll> > dist(nV,vector<ll>(nV,LINF));
 
         rep(i,nV)dist[i][i] = 0;
 
@@ -164,9 +164,10 @@ class Graph{
         }
 
         rep(k,nV)rep(i,nV)rep(j,nV){
-            chmin(dist[i][j],dist[i][k] + dist[k][j]);
+            if(!(dist[i][k]==LINF || dist[k][j]==LINF))chmin(dist[i][j],dist[i][k] + dist[k][j]);
         }
 
+        rep(i,nV)if(dist[i][i]<0){vector<vector<ll> > negcy;return negcy;}
         return dist;
     }
 
@@ -178,7 +179,7 @@ int main(){
     ll ans=0,sum=0;
 
     int V,E,r;
-    cin>>V>>E>>r;
+    cin>>V>>E;
 
     Graph g(V,E);
 
@@ -190,14 +191,18 @@ int main(){
         //g.addE(v,u,c);
     }
 
-    vector<vector<int> > dist = g.warshall_floyid();
+    vector<vector<ll> >dist = g.warshall_floyid();
+
+    if(dist.empty()){puts("NEGATIVE CYCLE");return 0;}
 
     rep(i,V){
         rep(j,V){
-            if(dist[i][j] != INF)cout<<dist[i][j]<<" ";
-            else cout<<"INF ";
+            if(dist[i][j] != LINF)cout<<dist[i][j];
+            else cout<<"INF";
+
+            if(j != V-1)cout<<" ";
+            else ln;
         }
-        ln;
     }
 
 

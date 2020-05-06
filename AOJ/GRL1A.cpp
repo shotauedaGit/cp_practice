@@ -39,6 +39,31 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+class edge{
+    public:
+
+    int frm;
+    int to;
+    int cost;
+
+    edge(int f,int t):frm(f),to(t){};
+    edge(int f,int t,int c):frm(f),to(t),cost(c){};
+};
+
+
+
+class Graph{
+    public:
+
+    int Vmx=200010;
+    int Emx=200010;
+
+    
+
+
+
+};
+
 int main(){
 
     bool flag=false;

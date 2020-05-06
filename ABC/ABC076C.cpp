@@ -28,8 +28,10 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
-typedef pair<int,int> pii;
-typedef pair<pii,pii> ppii;
+
+typedef pair<int,int> P;
+typedef pair<int,P> iP;
+typedef pair<P,P> PP;
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
@@ -38,60 +40,45 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
-    ll lg=0,sm=0;
 
-    int n;
-    cin >>n;
-    vector<int> a(n);
+    string s,t;
+    vector<string> kouho;
+    cin>>s>>t;
 
-    rep(i,n)cin>>a[i];
-    sort(all(a),greater<int>());
+    int sl = s.length();
+    int tl = t.length();
 
-    if(n%2==0){
-        ll big=0,small=0;
+    rep(i,(sl-tl)+1){
 
-        rep(i,(n/2)-1){
-            big += a[i]*2;
-        }
-        big += a[(n/2)-1];
-        small += a[n/2];
-
-        rep1(i,n/2+1,n){
-            small += a[i]*2;
+        bool ok = true;
+        rep(j,tl){
+            if(s[i+j]!='?' && t[j]!=s[i+j])ok = false;
         }
 
-        ans = abs(big-small);
+        if(ok){
+            string st = s;
+            rep(k,sl){
 
-    }else{
+                if(i<= k && k<tl+i)st[k]=t[k-i];
+                else if(s[k]=='?')st[k]='a';
 
-        ll ans1=0,ans2=0;
-        ll big=0,small=0;
+            }
 
-        rep(i,n/2)big += a[i]*2;
-        small += a[n/2]+a[(n/2)+1];
-        rep1(i,(n/2)+2,n)small += a[i]*2;
-
-        ans1 = abs(big-small);
-
-        reverse(all(a));
-
-        big = 0; small = 0;
-
-        rep(i,n/2)big += a[i]*2;
-        small += a[n/2]+a[(n/2)+1];
-        rep1(i,(n/2)+2,n)small += a[i]*2;
-
-        ans2 = abs(big-small);
-
-        ans = max(ans1,ans2);
+            db(st);ln;
+            kouho.eb(st);
+        }
     }
-
+    if(kouho.empty())cout<<"UNRESTORABLE"<<endl;
+    else
+    {
+        sort(all(kouho));
+        cout<<kouho[0]<<endl;
+    }
     //cout <<fixed<<setprecision(16)<< << endl;
-    cout<<ans<<endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
     return 0;
 }

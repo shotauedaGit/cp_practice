@@ -46,17 +46,21 @@ int main(){
 
     int n,h;
     cin>>n>>h;
-    vector<int> a(n),b(n);
+    vector<ll> a(n),b(n);
 
     rep(i,n){
         cin>>a[i]>>b[i];
     }
 
-    sort(all(a),greater<int>());
-    sort(all(b),greater<int>());
+    sort(all(a),greater<ll>());
+    sort(all(b),greater<ll>());
 
-    
-
+    for(ll bi:b){
+        if(bi < a[0] || h <= 0)break;
+        h -= bi;
+        ++ans;
+    }
+    ans += max(0LL,(a[0]+h-1)/a[0]);
 
     cout<<ans<<endl;
 

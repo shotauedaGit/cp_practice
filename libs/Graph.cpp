@@ -23,11 +23,14 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define repr(i,n) for(int _i=(n),i=_i;i>0;--i)
 
 class edge{
+    public:
 
-    edge();
     int frm;
     int to;
     int cost;
+
+    edge(int f,int t):frm(f),to(t){};
+    edge(int f,int t,int c):frm(f),to(t),cost(c){};
 };
 
 
@@ -37,6 +40,8 @@ class Graph{
 
     int Vmx=200010;
     int Emx=200010;
+
+    
 
 
 

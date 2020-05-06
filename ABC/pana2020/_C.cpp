@@ -43,15 +43,14 @@ int main(){
 
     ll a,b,c;
     cin>>a>>b>>c;
-    ll x=(c-a-b);
-    x*=x;
-    ll md = x%4;
-    ll p=a*b;
 
-    if(p < x/4LL || (p==x/4LL && md!=0))flag=true;
-    
-    if(flag)cout << "Yes" <<endl;
+    ll r =(c-a-b)*(c-a-b);
+    ll l = a*b*4;
+
+    db2(r,l);ln;
+
+    if(c>a+b && l<r)cout << "Yes" <<endl;
     else cout << "No" <<endl;
-    
+
     return 0;
 }

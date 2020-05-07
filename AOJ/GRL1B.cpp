@@ -127,7 +127,31 @@ class Graph{
         return dist;
     }
 
+    vector<int> bellman_ford(int s){//NEGCYCLE => (returns EMPTY vector)
+        vector<int> dist(nV,INF);
+        dist[s] = 0;
 
+        int roopcnt = 0;
+        while(1){
+            bool update = false;
+            rep(i,nV)rep(j,g[i].size()){
+
+                edge e = g[i][j];
+                int from = e.frm;
+                int nex = e.to;
+                int cost = e.cost;
+
+                if(dist[from]!=INF)if(chmin(dist[nex],dist[from]+cost))update=true;
+            }
+
+            if(update){
+                ++roopcnt;
+                if(roopcnt > nV-1){vector<int> negcy;return negcy;}
+            }else break;
+
+        }
+        return dist;
+    }
 
 };
 
@@ -149,9 +173,12 @@ int main(){
         //g.addE(v,u,c);
     }
 
-    vector<int> dist = g.dijkstra(r);
+    vector<int> dist = g.bellman_ford(r);
+
+    if(dist.empty()){puts("NEGATIVE CYCLE");return 0;}
+
     for(int d:dist){
-        if(d!=INF)cout<<d<<endl;
+        if(d < 1e9)cout<<d<<endl;
         else puts("INF");
     }
     //cout <<fixed<<setprecision(16)<< << endl;

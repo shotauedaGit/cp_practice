@@ -72,18 +72,37 @@ class Graph{
     vector<iv> vinfo;
     vector<ie> einfo;   
 
-    vector< vector< edge > > adj;//隣接行列
+    vector< vector< ll > > adj;//隣接行列<>
     vector< vector< edge > > g;//隣接リスト
 
-    Graph(int _nV,int _nE):nV(_nV),nE(_nE){
-
+    Graph(int _nV):nV(_nV){
         g.resize(nV);
         vinfo.resize(nV);
-        einfo.resize(nE);
+        if(nV <= 10000){
+            adj.resize(nV);
+            rep(i,nV)adj[i].resize(nV);
+        }
+    }
 
-        adj.resize(nV);
-        rep(i,nV)adj[i].resize(nV);
+    Graph(int _nV,int _nE):nV(_nV),nE(_nE){
+        g.resize(nV);vinfo.resize(nV);einfo.resize(nE);
+        
+        if(nV <= 10000){
+            adj.resize(nV);
+            rep(i,nV)adj[i].resize(nV);
+        }
+    }
 
+    void mt2list(){
+        rep(i,nV)rep(j,nV){
+            if(adj[i][j]!=0){
+                addE(i,j,adj[i][j]);
+            }
+        }
+    }
+
+    void list2mt(bool isDirected){//有効グラフかどうか渡してあげて
+        
     }
 
     void addE(int u,int v){//無効グラフの時は逆方向もちゃんと張ろう

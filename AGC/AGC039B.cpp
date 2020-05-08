@@ -72,17 +72,18 @@ class Graph{
     vector<iv> vinfo;
     vector<ie> einfo;   
 
-    vector< vector< edge > > adj;//隣接行列
+    vector< vector< ll > > adj;//隣接行列
     vector< vector< edge > > g;//隣接リスト
 
     Graph(int _nV):nV(_nV){
 
         g.resize(nV);
         vinfo.resize(nV);
-        einfo.resize(nE);
 
-        adj.resize(nV);
-        rep(i,nV)adj[i].resize(nV);
+        if(nV <= 10000){
+            adj.resize(nV);
+            rep(i,nV)adj[i].resize(nV);
+        }
 
     }
 
@@ -92,23 +93,23 @@ class Graph{
         vinfo.resize(nV);
         einfo.resize(nE);
 
-        adj.resize(nV);
-        rep(i,nV)adj[i].resize(nV);
-
+        if(nV <= 10000){
+            adj.resize(nV);
+            rep(i,nV)adj[i].resize(nV);
+        }
     }
 
     void mt2list(){
-
-
+        rep(i,nV)rep(j,nV){
+            if(adj[i][j]!=0){
+                addE(i,j,adj[i][j]);
+            }
+        }
     }
 
-    void list2mt(){
+    void list2mt(bool isDirected){//有効グラフかどうか渡してあげて
         
     }
-
-
-
-
 
     void addE(int u,int v){//無効グラフの時は逆方向もちゃんと張ろう
         edge e(u,v,1);
@@ -124,7 +125,6 @@ class Graph{
         vector<int> col(nV,-1);
         vector<bool> vis(nV,false);
         col[s]=0;
-
         stack<int> st;st.push(s);
 
         while(!st.empty()){
@@ -134,11 +134,9 @@ class Graph{
             rep(i , g[cur].size()){
                 edge e = g[cur][i];
                 int nx = e.to;
-
                 int nxc = (col[cur]+1)%2;//
 
                 if(vis[nx]){
-
                     if(col[nx] != nxc){//
                         return false;
                         break;
@@ -189,20 +187,17 @@ class Graph{
         return dist;
     }
 
-    vector<int> bellman_ford(int s){//NEGCYCLE => (returns EMPTY vector)
+    vector<int> bellman_ford(int s){//”頂点sから到達可能な”NEGCYCLE => (returns EMPTY vector)
         vector<int> dist(nV,INF);
         dist[s] = 0;
-
         int roopcnt = 0;
         while(1){
             bool update = false;
             rep(i,nV)rep(j,g[i].size()){
-
                 edge e = g[i][j];
                 int from = e.frm;
                 int nex = e.to;
                 int cost = e.cost;
-
                 if(dist[from]!=INF)if(chmin(dist[nex],dist[from]+cost))update=true;
             }
 
@@ -210,25 +205,20 @@ class Graph{
                 ++roopcnt;
                 if(roopcnt > nV-1){vector<int> negcy;return negcy;}
             }else break;
-
         }
         return dist;
     }
 
     vector< vector<ll> > warshall_floyid(){//NEGCYCLE => (returns EMPTY vector)
         vector< vector<ll> > dist(nV,vector<ll>(nV,LINF));
-
         rep(i,nV)dist[i][i] = 0;
-
         rep(i,nV)rep(j,g[i].size()){
             edge e = g[i][j];
             dist[e.frm][e.to] = e.cost;
         }
-
         rep(k,nV)rep(i,nV)rep(j,nV){
             if(!(dist[i][k]==LINF || dist[k][j]==LINF))chmin(dist[i][j],dist[i][k] + dist[k][j]);
         }
-
         rep(i,nV)if(dist[i][i]<0){vector<vector<ll> > negcy;return negcy;}
         return dist;
     }
@@ -244,10 +234,27 @@ int main(){
     int n,m;
     cin>>n;
 
-    Graph gr(n,m);
+    Graph gr(n);
 
+    string st;
+    
+    rep(i,n){
+        
+        cin>>st;
+        rep(j,n)gr.adj[i][j] = st[j]-'0';
+    }
 
-    cout<<ans<<endl;
+    gr.mt2list();
+
+    if(gr.isBipart(0)){
+        int d=0;
+
+        auto vvd = gr.warshall_floyid();
+        for(auto vd:vvd)for(auto di:vd)chmax(d,di);
+        cout<<d+1<<endl;
+    }else{
+        cout<<-1<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

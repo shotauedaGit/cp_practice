@@ -69,9 +69,8 @@ class Graph{
     int nE;
 
     vector<iv> vinfo;
-    vector<ie> einfo;   
+    vector<ie> einfo;
 
-    vector< vector< edge > > adj;//隣接行列
     vector< vector< edge > > g;//隣接リスト
 
     Graph(int _nV,int _nE):nV(_nV),nE(_nE){
@@ -79,9 +78,6 @@ class Graph{
         g.resize(nV);
         vinfo.resize(nV);
         einfo.resize(nE);
-
-        adj.resize(nV);
-        rep(i,nV)adj[i].resize(nV);
 
     }
 
@@ -177,3 +173,22 @@ class Graph{
     }
 
 };
+
+int main(){
+
+    bool flag=false;
+    ll ans=0,sum=0;
+
+    int n,m;
+    cin>>n;
+
+
+    cout<<ans<<endl;
+
+    //cout <<fixed<<setprecision(16)<< << endl;
+
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
+
+    return 0;
+}

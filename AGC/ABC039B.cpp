@@ -40,6 +40,7 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+
 class iv{
     
 };
@@ -69,9 +70,21 @@ class Graph{
     int nE;
 
     vector<iv> vinfo;
-    vector<ie> einfo;
+    vector<ie> einfo;   
 
+    vector< vector< edge > > adj;//隣接行列
     vector< vector< edge > > g;//隣接リスト
+
+    Graph(int _nV):nV(_nV){
+
+        g.resize(nV);
+        vinfo.resize(nV);
+        einfo.resize(nE);
+
+        adj.resize(nV);
+        rep(i,nV)adj[i].resize(nV);
+
+    }
 
     Graph(int _nV,int _nE):nV(_nV),nE(_nE){
 
@@ -79,7 +92,23 @@ class Graph{
         vinfo.resize(nV);
         einfo.resize(nE);
 
+        adj.resize(nV);
+        rep(i,nV)adj[i].resize(nV);
+
     }
+
+    void mt2list(){
+
+
+    }
+
+    void list2mt(){
+        
+    }
+
+
+
+
 
     void addE(int u,int v){//無効グラフの時は逆方向もちゃんと張ろう
         edge e(u,v,1);
@@ -89,6 +118,38 @@ class Graph{
     void addE(int u,int v,int cost){ //無効グラフの時は逆方向もちゃんと張ろう
         edge e(u,v,cost);
         g[u].eb(e);
+    }
+
+    bool isBipart(int s){
+        vector<int> col(nV,-1);
+        vector<bool> vis(nV,false);
+        col[s]=0;
+
+        stack<int> st;st.push(s);
+
+        while(!st.empty()){
+            int cur = st.top();st.pop();
+            vis[cur] = true;
+
+            rep(i , g[cur].size()){
+                edge e = g[cur][i];
+                int nx = e.to;
+
+                int nxc = (col[cur]+1)%2;//
+
+                if(vis[nx]){
+
+                    if(col[nx] != nxc){//
+                        return false;
+                        break;
+                    }
+                    continue;
+                }
+                col[nx] = nxc;
+                st.push(nx);
+            }
+        }
+        return true;
     }
 
     vector<int> dijkstra(int s){ //0idx_
@@ -174,6 +235,7 @@ class Graph{
 
 };
 
+
 int main(){
 
     bool flag=false;
@@ -181,6 +243,8 @@ int main(){
 
     int n,m;
     cin>>n;
+
+    Graph gr(n,m);
 
 
     cout<<ans<<endl;

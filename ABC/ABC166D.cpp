@@ -47,28 +47,30 @@ int main(){
     ll x;
     cin>>x;
 
-    vector<int> pow5;
-    pow5.eb(0);
+    ll a=0,i=0;
 
-    ll c = 1;
-    while(c*c*c*c*c <= 2*x){
-        pow5.eb(c*c*c*c*c);
-        ++c;
-    }
+    for(a=1;1;++a){
 
-    rep(i,pow5.size()){
-        ll pi = pow5[i];
-        if(x-pi < 0)break;
+        bool end = true;
+        for(i=1; i <= 2*a ;++i){
+            ll b = a-i;
 
-        auto it=find(all(pow5),x-pi);
-        if(it != pow5.end()){
-            int a = lower_bound(all(pow5),x-pi) - pow5.begin();
-            int b = i;
+            ll a5  =a*a*a*a*a;
+            ll b5  =b*b*b*b*b;
 
-            cout<<a<<" "<<-b<<endl;
-            return 0;
+            //db3(a,b,a5-b5);ln;
+
+            if(a5-b5 > x)break;
+            else if(a5-b5==x){
+                cout<<a<<" "<<b<<endl;
+                return 0;
+            }
+
+            end  = false;
         }
+        if(end)break;
     }
+
     //cout <<fixed<<setprecision(16)<< << endl;
 
     //if(flag)cout << "Yes" <<endl;

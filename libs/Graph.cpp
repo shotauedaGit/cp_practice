@@ -75,9 +75,12 @@ class Graph{
     vector< vector< ll > > adj;//隣接行列<>
     vector< vector< edge > > g;//隣接リスト
 
+    // to do : データ構造を渡すと、全部をnでresizeしてくれるような関数作る
+
     Graph(int _nV):nV(_nV){
         g.resize(nV);
         vinfo.resize(nV);
+
         if(nV <= 10000){  //暴発防止
             adj.resize(nV);
             rep(i,nV)adj[i].resize(nV);

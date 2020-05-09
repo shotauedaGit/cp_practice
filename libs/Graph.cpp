@@ -78,7 +78,7 @@ class Graph{
     Graph(int _nV):nV(_nV){
         g.resize(nV);
         vinfo.resize(nV);
-        if(nV <= 10000){
+        if(nV <= 10000){  //暴発防止
             adj.resize(nV);
             rep(i,nV)adj[i].resize(nV);
         }
@@ -101,8 +101,13 @@ class Graph{
         }
     }
 
-    void list2mt(bool isDirected){//有効グラフかどうか渡してあげて
-        
+    void list2mt(){//有効グラフかどうか渡してあげて
+        rep(i,nV){
+            rep(j , g[i].size()){
+                edge e = g[i][j];
+                adj[ e.frm ][ e.to ] = e.cost;
+            }
+        }
     }
 
     void addE(int u,int v){//無効グラフの時は逆方向もちゃんと張ろう

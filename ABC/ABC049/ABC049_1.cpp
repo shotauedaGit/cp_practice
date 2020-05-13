@@ -40,74 +40,39 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-vector<int> ranlen(string s){
-
-    char now = s[0];
-    int i=0,count=0,len=s.size();
-    vector<int>l;
-
-    while(i < len){
-        count=0;
-        now = s[i];
-        while(s[i]==now  && i < len){
-            ++i;
-            ++count;
-        }
-
-        l.push_back(count);
-    }
-    return l;
-}
-
 int main(){
+
     bool flag=true;
     ll ans=0,sum=0;
 
-    int n,k;
     string s;
-    cin >>n>>k>>s;
-
-    vector<int> r = ranlen(s);
-    if(s[0] == '0')r.insert(r.begin(),0);
-    if(s[n-1] == '0')r.push_back(0);
-
-    /*
-    for (int i = 0; i < r.size(); i++){
-        cout << r[i] << " ";
-    }
-    ln;
-    */
+    cin>>s;
 
 
-    vector<int> sumr( r.size() );
-    sumr[0] = r[0];
-    
-    rep1(i,1,r.size()){
-        sumr[i] = sumr[i-1]+r[i];
-    }
+    int p=0;
+    while(p < s.length()){
+        if(s.substr(p,5) == "dream"){
+            p += 5;
 
-    int tmp;
-    if(r.size()<=2*k){
-        ans = n;
-    }else{
-        
-        tmp = sumr[2*k];
-        chmax(ans,tmp);
+            if(s.substr(p,2) == "er"){
+                if(s.substr(p,5) != "erase")p+=2;
+            }
 
-        int p = 2;
-        while(p+2*k < r.size()){
-            tmp = sumr[p+2*k] - sumr[p-1];
-            chmax(ans,tmp);
-            p += 2;
+        }else if(s.substr(p,5) == "erase"){
+            p += 5;
+
+            if(s.substr(p,1) == "r")++p;
+
+        }else{
+            flag=false;
+            break;
         }
     }
 
-
     //cout <<fixed<<setprecision(16)<< << endl;
-    cout << ans << endl;
 
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
-    
+    if(flag)cout << "YES" <<endl;
+    else cout << "NO" <<endl;
+
     return 0;
 }

@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF 2147483647
-#define LINF 9223372036854775807
 
+#define INF (1<<31)-1
+#define LINF (1LL<<63)-1LL
 #define MOD 1000000007
 #define MOD2 998244353
 
@@ -40,74 +40,46 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-vector<int> ranlen(string s){
-
-    char now = s[0];
-    int i=0,count=0,len=s.size();
-    vector<int>l;
-
-    while(i < len){
-        count=0;
-        now = s[i];
-        while(s[i]==now  && i < len){
-            ++i;
-            ++count;
-        }
-
-        l.push_back(count);
-    }
-    return l;
-}
-
 int main(){
-    bool flag=true;
+
+    bool flag=false;
     ll ans=0,sum=0;
 
-    int n,k;
-    string s;
-    cin >>n>>k>>s;
+    int n,p;
+    cin>>n>>p;
 
-    vector<int> r = ranlen(s);
-    if(s[0] == '0')r.insert(r.begin(),0);
-    if(s[n-1] == '0')r.push_back(0);
+    ll dp[n][2]={};
 
-    /*
-    for (int i = 0; i < r.size(); i++){
-        cout << r[i] << " ";
-    }
-    ln;
-    */
+    vector<int> a(n);
+    int piv = (p+1)%2;
 
+    rep(i,n)cin>>a[i];
 
-    vector<int> sumr( r.size() );
-    sumr[0] = r[0];
-    
-    rep1(i,1,r.size()){
-        sumr[i] = sumr[i-1]+r[i];
-    }
-
-    int tmp;
-    if(r.size()<=2*k){
-        ans = n;
+    if(a[0]%2==0){
+        if(p == 1){
+            dp[0][1]=2;
+        }else{
+            dp[0][0]=2;
+        }
     }else{
-        
-        tmp = sumr[2*k];
-        chmax(ans,tmp);
+            dp[0][0]=1;
+            dp[0][1]=1;
+    }
 
-        int p = 2;
-        while(p+2*k < r.size()){
-            tmp = sumr[p+2*k] - sumr[p-1];
-            chmax(ans,tmp);
-            p += 2;
+    rep1(i,1,n){
+        if(a[i]%2 == 0){
+            dp[i][0] = dp[i-1][0]*2;
+            dp[i][1] = dp[i-1][1]*2;
+        }else{
+            dp[i][0] = dp[i-1][1]+dp[i-1][0];
+            dp[i][1] = dp[i-1][0]+dp[i-1][1];
         }
     }
 
+    cout<<dp[n-1][0]<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-    cout << ans << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
     return 0;
 }

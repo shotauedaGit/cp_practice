@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF 2147483647
-#define LINF 9223372036854775807
 
+#define INF (1<<31)-1
+#define LINF (1LL<<63)-1LL
 #define MOD 1000000007
 #define MOD2 998244353
 
@@ -40,74 +40,21 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-vector<int> ranlen(string s){
-
-    char now = s[0];
-    int i=0,count=0,len=s.size();
-    vector<int>l;
-
-    while(i < len){
-        count=0;
-        now = s[i];
-        while(s[i]==now  && i < len){
-            ++i;
-            ++count;
-        }
-
-        l.push_back(count);
-    }
-    return l;
-}
-
 int main(){
-    bool flag=true;
+
+    bool flag=false;
     ll ans=0,sum=0;
 
-    int n,k;
-    string s;
-    cin >>n>>k>>s;
-
-    vector<int> r = ranlen(s);
-    if(s[0] == '0')r.insert(r.begin(),0);
-    if(s[n-1] == '0')r.push_back(0);
-
-    /*
-    for (int i = 0; i < r.size(); i++){
-        cout << r[i] << " ";
-    }
-    ln;
-    */
+    int n,m;
+    cin>>n;
 
 
-    vector<int> sumr( r.size() );
-    sumr[0] = r[0];
-    
-    rep1(i,1,r.size()){
-        sumr[i] = sumr[i-1]+r[i];
-    }
-
-    int tmp;
-    if(r.size()<=2*k){
-        ans = n;
-    }else{
-        
-        tmp = sumr[2*k];
-        chmax(ans,tmp);
-
-        int p = 2;
-        while(p+2*k < r.size()){
-            tmp = sumr[p+2*k] - sumr[p-1];
-            chmax(ans,tmp);
-            p += 2;
-        }
-    }
-
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-    cout << ans << endl;
 
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
+
     return 0;
 }

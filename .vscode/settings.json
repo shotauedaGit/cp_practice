@@ -3,6 +3,13 @@
         "*.h": "c",
         "*.cpp": "cpp",
         "iostream": "cpp",
-        "random": "cpp"
-    }
+        "random": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "functional": "cpp",
+        "type_traits": "cpp"
+    },
+    "python.pythonPath": "C:\\Users\\akatu\\Anaconda3\\envs\\data-science\\python.exe"
 }

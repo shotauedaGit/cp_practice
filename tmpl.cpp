@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF (1<<31)-1
-#define LINF (1LL<<63)-1LL
+#define INF 2147483647
+#define LINF 9223372036854775807
 #define MOD 1000000007
 #define MOD2 998244353
 

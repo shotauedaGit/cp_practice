@@ -74,6 +74,7 @@ class segtree{
         }
     }
     ll Query_RMQ(int st,int ed,int idx,int l,int r){//st<=x<edのRMQを返す  ※dat[idx]は、l<=idx<rのクエリを持つ。
+        //db3(dat[idx],l,r);ln;
         if(r <=st || ed <= l){return init_val;}
         else if(st<=l && r<=ed)return dat[idx];//答えが判明するのはここ
         else{
@@ -91,7 +92,7 @@ int main(){
     int n,q;
     cin>>n>>q;
 
-    segtree sgt(n,0);
+    segtree sgt(n,INF);
     //db(sgt.N);ln;
 
     rep(i,q){
@@ -101,11 +102,11 @@ int main(){
         if(com==0){
             int i,x;
             cin>>i>>x;
-            sgt.UpD_RSQ(--i,x);
+            sgt.UpD_RMQ(i,x);
         }else{
             int s,t;
-            cin>>s>>t;--s;
-            cout << sgt.Query_RSQ(s,t,0,0,(sgt.N)) <<endl;
+            cin>>s>>t;++t;
+            cout << sgt.Query_RMQ(s,t,0,0,(sgt.N)) <<endl;
         }
     }
 

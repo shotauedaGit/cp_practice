@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 #define INF 2147483647
 #define LINF 9223372036854775807
 #define MOD 1000000007
@@ -41,19 +42,41 @@ int dy[4]={0,1,0,-1};
 
 int main(){
 
-    bool flag=false;
+    bool flag=true;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int n,l;
+    cin>>n>>l;
+    vector<int> a(n);
 
+    int mxl=0,lstn;
+    cin>>a[0];
+    rep(i,n-1){
+        cin>>a[i+1];
 
-    cout<<ans<<endl;
+        if( a[i+1]+a[i] > mxl){
+            mxl = a[i+1]+a[i];
+            lstn = i+1;
+        }
+    }
+
+    if(mxl < l)flag=false;
+
+    vector<int>ansarr;
+    if(flag){
+        rep(i,lstn)ansarr.eb(lstn-i);
+        rep1(i,lstn+1,n)ansarr.eb(i);
+        reverse(all(ansarr));
+        
+        cout<<"Possible"<<endl;
+        for(int ai:ansarr)cout<<ai<<endl;
+    
+    }else{
+        cout<<"Impossible"<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

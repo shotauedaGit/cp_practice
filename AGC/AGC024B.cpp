@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 #define INF 2147483647
 #define LINF 9223372036854775807
 #define MOD 1000000007
@@ -44,16 +45,26 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    int n;
     cin>>n;
+    vector<int> p(n),q(n);
 
+    rep(i,n){
+        cin>>p[i];
+        q[ p[i]-1 ] = i;
+    }
 
-    cout<<ans<<endl;
+    int cnt=1,mx=1;
+    rep1(i,1,n){
+        if(q[i-1] < q[i])++cnt;
+        else cnt = 1;
+        chmax(mx,cnt);
+    }
+
+    cout<<n-mx<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

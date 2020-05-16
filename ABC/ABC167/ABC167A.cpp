@@ -42,19 +42,20 @@ int dy[4]={0,1,0,-1};
 
 int main(){
 
-    bool flag=false;
+    bool flag=true;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    string s,t;
+    cin>>s>>t;
 
 
-    cout<<ans<<endl;
+    rep(i , s.length()){
+        if(s[i] != t[i])flag = false;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
+    if(flag)cout << "Yes" <<endl;
+    else cout << "No" <<endl;
 
     return 0;
 }

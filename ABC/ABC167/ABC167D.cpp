@@ -56,42 +56,35 @@ int main(){
     map<int,int> vis;
     
     int cur = 0;
-    int cycst,cycstps,cyclen=0;
+    int cyp,cyl;
 
-    rep(i,n+1){
-        if(vis[cur] != 0){
-            cycst = cur;
-            cyclen = (i) - vis[cur];
-            cycstps = vis[cur];
+    int tcnt=0;
+    while(1){
+
+        if(vis[cur] == 0){
+            vis[cur] = tcnt;
+        }else{
+
+            cyl=tcnt-vis[cur];
+            cyp=vis[cur];
             break;
+
         }
-        vis[cur] = i;
-        db2(cur,i);ln;
-        
+
         cur = a[cur];
-    }
-
-    db3(cyclen,cycst,cycstps);ln;
-
-    
-    if(k-1 < cycstps){
-        ans=0;
-        rep(i,k){
-            ans = a[ans];
-        }
-    }else{
-        k -= cycstps+1;
-        k %= cyclen;
-        
-        ans=cycst;
-        rep(i,k+1){
-            db(ans);ln;
-            ans = a[ans];
-        }
+        ++tcnt;
     }
 
 
-    
+    if(k > cyp){
+        k -= cyp;k %= cyl;k += cyp;
+    }
+
+    ans = 0;
+    rep(i,k){
+        ans = a[ans];
+    }
+
     cout<< ans+1<< endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;

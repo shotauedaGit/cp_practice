@@ -22,7 +22,6 @@ int main(){
     
     ll k,skip;
     k = ceil((sqrt(8*n+1)-1)/2);
-
     skip = k*(k+1)/2 - n;
 
     for (int i = 1; i <= k; ++i){
@@ -32,9 +31,7 @@ int main(){
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //cout << ans << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-    
     return 0;
 }

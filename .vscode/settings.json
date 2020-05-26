@@ -9,7 +9,8 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "functional": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "ostream": "cpp"
     },
     "python.pythonPath": "C:\\Users\\akatu\\Anaconda3\\envs\\data-science\\python.exe"
 }

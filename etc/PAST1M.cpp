@@ -39,68 +39,78 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-/* to do
-    単品売りはすべて通す。
-    
-    奇数番目、全体の現在の最小値を保持しておいて、最小値で足りないクエリが来たらスルー。
-    足りるなら、まとめ売りで何枚を累計売ったか記憶しておく(odd,al)
-*/
+class str{
+    public:
+    int mag=0;
+    int mass=0;
+    int type=0;
+    long double score=0;
+
+    str(){}
+    str(int a,int b,int tp){
+        mass = a;
+        mag = b;
+        type  = tp;
+
+        score = (long double)b/a;
+    }
+
+};
+
+
+bool cmp(str a,const str b){
+    return (a.score > b.score);
+}
 
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
+    long double ans=0;
 
-    int n,q;
-    cin>>n;
-    vector<ll> c(n);
-    
-    ll mnOd=LINF,mn=LINF;
+    int n,m;
+    cin>>n>>m;
+    vector<str> mst(n+m);
+
     rep(i,n){
-        cin>>c[i];
-        if(i%2==0)chmin(mnOd,c[i]);
-        chmin(mn,c[i]);
+        int a,b;
+        cin>>a>>b;
+
+        str mi(a,b,1);
+        mst[i]=mi;
     }
 
-    ll odd=0,al=0;
+    rep(i,m){
+        int c,d;
+        cin>>c>>d;
 
-    cin>>q;
-    rep(i,q){
-        int op;cin>>op;
+        str mi(c,d,2);
+        mst[n+i]=mi;
+    }
 
-        if(op==1){
+    sort(all(mst),cmp);
 
-            int x,a;
-            cin>>x>>a;--x;
+    int cnt=5,hlp=0;
+    long double A=0,B=0;
 
-            if(c[x] < a)continue;
-            c[x] = c[x]-a;ans+=a;
+    for(auto p:mst){
+        /*
+        if(cnt==0)break;
 
-            if(x%2==0)chmin(mnOd,c[i]);
-            chmin(mn,c[i]);
-
-        }else if(op==2){
-            int a;cin>>a;
-
-            if(mnOd < a)continue;
-            odd += a;
-            mnOd -= a;
-
-        }else{
-            int a;cin>>a;
-
-            if(mn < a)continue;
-            al += a;
-            mn -=a;
+        if(p.type == 2){
+            if(hlp==1)continue;
+            hlp++;
         }
+
+        A += p.mass;
+        B += p.mag;
+        */
+
+        db3(p.score,p.mag,p.type);ln;
+
     }
 
-    ans += odd*n/2;
-    if(n%2==1)ans+=odd;
-
-    ans += al*n;
-    cout<<ans<<endl;
-    //cout <<fixed<<setprecision(16)<< << endl;
+    //cout<<B/A<<endl;
+    cout <<fixed<<setprecision(16)<<B/A << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
     return 0;

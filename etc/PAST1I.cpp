@@ -39,69 +39,21 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-/* to do
-    単品売りはすべて通す。
-    
-    奇数番目、全体の現在の最小値を保持しておいて、最小値で足りないクエリが来たらスルー。
-    足りるなら、まとめ売りで何枚を累計売ったか記憶しておく(odd,al)
-*/
-
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,q;
+    int n,m;
     cin>>n;
-    vector<ll> c(n);
-    
-    ll mnOd=LINF,mn=LINF;
-    rep(i,n){
-        cin>>c[i];
-        if(i%2==0)chmin(mnOd,c[i]);
-        chmin(mn,c[i]);
-    }
 
-    ll odd=0,al=0;
 
-    cin>>q;
-    rep(i,q){
-        int op;cin>>op;
-
-        if(op==1){
-
-            int x,a;
-            cin>>x>>a;--x;
-
-            if(c[x] < a)continue;
-            c[x] = c[x]-a;ans+=a;
-
-            if(x%2==0)chmin(mnOd,c[i]);
-            chmin(mn,c[i]);
-
-        }else if(op==2){
-            int a;cin>>a;
-
-            if(mnOd < a)continue;
-            odd += a;
-            mnOd -= a;
-
-        }else{
-            int a;cin>>a;
-
-            if(mn < a)continue;
-            al += a;
-            mn -=a;
-        }
-    }
-
-    ans += odd*n/2;
-    if(n%2==1)ans+=odd;
-
-    ans += al*n;
     cout<<ans<<endl;
+
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

@@ -39,16 +39,54 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+int dx8[8]={1,1,0,-1,-1,-1,0,1};
+int dy8[8]={0,1,1,1,0,-1,-1,-1};
+
+
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
+    ll sum=0;
 
-    int n,m;
-    cin>>n;
+    int h,w,n;
+    cin>>h>>w>>n;
+
+    map<P,int> cnt;
+
+    rep(i,n){
+        int x,y;
+        cin>>y>>x;
+
+        //db2(x,y);ln;
+        
+        if(! (x==1||x==w||y==1||y==h ))cnt[ P(x,y) ]++;
+
+        rep(j,8){
+            int nx = x+dx8[j];
+            int ny = y+dy8[j];
+            
+            if(!(0<nx&&nx<=w&&0<ny&&ny<=h))continue;
+            if(nx==1||nx==w||ny==1||ny==h)continue;
+            
+            cnt[ P(nx,ny) ]++;
+            //db2(nx,ny);ln;
+
+        }
+    }
 
 
-    cout<<ans<<endl;
+
+    vector<ll> ans(10,0);
+    for(auto p:cnt){
+        ans[ p.second ]++;
+
+        //db3( p.first.first, p.first.second , p.second  );ln;
+
+        sum++;
+    }
+    ans[0] = (ll)(h-2)*(w-2)-sum;
+    
+    rep(i,10)cout<<ans[i]<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

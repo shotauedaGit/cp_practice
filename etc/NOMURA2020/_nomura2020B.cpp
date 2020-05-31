@@ -44,9 +44,20 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    string t;
+    cin>>t;
 
+    rep(i , t.length()){
+        if(t[i] =='?')t[i] = 'D';
+    }
+    
+    /*
+    if(t[0]=='D')ans++;
+    rep1(i,1,t.length()){
+        if(t[i-1]=='P'&&t[i-1]=='D')ans++;
+        if(t[i]=='D')ans++;
+    }
+    */
 
     cout<<ans<<endl;
 

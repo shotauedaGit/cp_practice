@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF (1<<31)-1
-#define LINF (1LL<<63)-1LL
+#define INF 2147483647
+#define LINF 9223372036854775807
 #define MOD 1000000007
 #define MOD2 998244353
 
@@ -28,6 +28,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
+typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -38,6 +39,10 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
+
+
+
+
 
 int main(){
 

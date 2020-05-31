@@ -28,7 +28,6 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
-typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -40,8 +39,23 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+int f(int exp){
 
+    int tmp = 1;
 
+    while(1){
+        exp -= tmp;
+
+        if(exp <= 0){
+            if(exp < 0)tmp-=1;
+            break;
+        }
+    
+        ++tmp;
+    }
+
+    return tmp;
+}
 
 
 int main(){
@@ -49,9 +63,30 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    ll n;
     cin>>n;
 
+    map<ll,int> divs;
+    ll p = n;
+    
+    rep1(i ,2, sqrt(n)+1){
+        int cnt=0;
+        while(p%i==0){p/=i;cnt++;}
+        
+        if(cnt>0){
+            divs[i] = cnt;
+        
+        }
+    }
+    if(p>1)divs[n]=1;
+
+    for(auto p:divs){
+        int exp = p.second;
+        int ad = f(exp);
+        
+        //db(ad);ln;
+        ans += ad;
+    }
 
     cout<<ans<<endl;
 

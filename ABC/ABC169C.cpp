@@ -48,9 +48,9 @@ int main(){
     long double b;
     cin>>a>>b;
 
-    cout<<(ll)(a*b)<<endl;
+    //cout<<a*b<<endl;
 
-    //cout <<fixed<<setprecision(16)<< << endl;
+    cout <<fixed<<setprecision(16)<< a*b<< endl;
 
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;

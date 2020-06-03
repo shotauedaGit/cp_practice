@@ -28,6 +28,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
+typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -138,6 +139,32 @@ class mFact{
     //*/
 };
 
+class frac{
+    public:
+    
+    ll a=1;
+    ll b=1;
+
+    frac(){}
+    frac(ll _a,ll _b):a(_a),b(_b){
+
+        if(b==0){
+            a=min(1LL,a);
+
+        }else if(a==0){
+            b=min(1LL,b);
+
+        }else{
+            a /= gcd(a,b);
+            b /= gcd(a,b);
+        }
+    }
+
+    frac hate(){
+        return frac(b,a);
+    }
+};
+
 
 int main(){
 
@@ -151,35 +178,69 @@ int main(){
 
     vector<ll> a(n),b(n);
 
-    map<long double,int>arg;
+    map<long double,pair<int,int>>arg;
+    
+    P axis(0,0);
 
-    bool z=false;
+    int z=0;
     rep(i,n){
+
+        /*to do
+        制度が足りなく、傾きは既約分数でもっておく
+
+        */
+
         cin>>a[i]>>b[i];
 
         long double ai = a[i];
         long double bi = b[i];
 
-        if(ai==0 &&bi==0){
-            z=true;
-        }else{
-            arg[(ai/bi)]++;
-        }
-        
+        if(b[i] < 0){a[i]*=-1; b[i]*=-1;}
+        frac a_b(a[i],b[i]); //分数の
 
+
+        if(bi == 0){
+            if(ai == 0){
+                z++;
+            }else{
+                axis.fi++;
+            }
+        }else{
+            long double t = ai/bi;
+            arg[t].fi++;
+        }
     }
 
+    mInt<MOD> tw(2);
+
     for(auto p:arg){
-        cout<<"tan th:"<<p.fi<<"  cnt="<<p.se<<endl;
-        
-        mInt<MOD> mul(p.se + 1LL);
+        if(p.second.second == 1)continue;
+
+        ld t = p.first;
+        ld tinv = (ld)-1.0/t;
+
+        int nQ = arg[tinv].first;
+        int nP = p.second.first;
+
+        arg[t].second=1;
+        arg[tinv].second=1;
+
+        //db2(t,nP);
+        //db2(-tinv,nQ);
+        //ln;
+
+        mInt<MOD> mul = tw.pow(nQ) + tw.pow(nP) - 1;
+        //cout<<"mlu:"<<mul<<endl;
         mAns *= mul;
     }
 
-    if(z) mAns *=2;
+    int nZ = arg[0.0].first;
+    int nVert = axis.first;
 
-    mAns -= 1;
+    mAns *= tw.pow(nZ) + tw.pow(nVert) - 1;
+    mAns += z-1;
     cout<<mAns<<endl;
+
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;

@@ -166,8 +166,10 @@ int main(){
         }
 
         if(b[i] < 0){a[i]*=-1; b[i]*=-1;}
-        if(a[i] == 0)chmin(b[i],1);
-        else if(b[i] == 0)chmin(a[i],1);
+
+        if(a[i] == 0)b[i] /= abs(b[i]);
+        else if(b[i] == 0)a[i] = 1;
+
         else{
             ll div =gcd(abs(a[i]),abs(b[i]));
             a[i] /= div;
@@ -193,8 +195,8 @@ int main(){
         ll hb = a;
 
         if(hb < 0){ha*=-1; hb*=-1;}
-        if(ha == 0)chmin(hb,1);
-        else if(hb == 0)chmin(ha,1);
+        if(ha == 0)hb /= abs(hb);
+        else if(hb == 0)ha = 1;
         else{
             ll div =gcd(abs(ha),abs(hb));
             ha /= div;
@@ -202,14 +204,15 @@ int main(){
         }
 
         int nQ = arg[{ha,hb}].first;
+
+        if(arg[{ha,hb}].second == 1)continue;
         arg[{ha,hb}].second = 1;
 
-        db2(a,b);
-        db2(nP,nQ);
+        //db2(a,b);
+        //db2(nP,nQ);
         mInt<MOD> mul =tw.pow(nP) + tw.pow(nQ) - 1;
 
-        db(mul);ln;
-        
+        //db(mul);ln;
         mAns *= mul;
     }
 

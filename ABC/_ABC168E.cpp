@@ -34,7 +34,7 @@ typedef pair<int,int> P;
 typedef pair<int,P> iP;
 typedef pair<P,P> PP;
 
-ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
+ll gcd(ll a,ll b){return b?gcd(b,a%b):abs(a);}
 ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 
 int dx[4]={1,0,-1,0};
@@ -139,32 +139,6 @@ class mFact{
     //*/
 };
 
-class frac{
-    public:
-    
-    ll a=1;
-    ll b=1;
-
-    frac(){}
-    frac(ll _a,ll _b):a(_a),b(_b){
-
-        if(b==0){
-            a=min(1LL,a);
-
-        }else if(a==0){
-            b=min(1LL,b);
-
-        }else{
-            a /= gcd(a,b);
-            b /= gcd(a,b);
-        }
-    }
-
-    frac hate(){
-        return frac(b,a);
-    }
-};
-
 
 int main(){
 
@@ -175,70 +149,73 @@ int main(){
     cin>>n;
 
     mInt<MOD>mAns(1);
-
     vector<ll> a(n),b(n);
-
-    map<long double,pair<int,int>>arg;
-    
-    P axis(0,0);
+    map<pair<ll,ll> , pair<int,int>> arg;
 
     int z=0;
     rep(i,n){
 
         /*to do
         制度が足りなく、傾きは既約分数でもっておく
-
         */
 
         cin>>a[i]>>b[i];
-
-        long double ai = a[i];
-        long double bi = b[i];
+        if(a[i]==0 && b[i]==0){
+            z++;
+            continue;
+        }
 
         if(b[i] < 0){a[i]*=-1; b[i]*=-1;}
-        frac a_b(a[i],b[i]); //分数の
-
-
-        if(bi == 0){
-            if(ai == 0){
-                z++;
-            }else{
-                axis.fi++;
-            }
-        }else{
-            long double t = ai/bi;
-            arg[t].fi++;
+        if(a[i] == 0)chmin(b[i],1);
+        else if(b[i] == 0)chmin(a[i],1);
+        else{
+            ll div =gcd(abs(a[i]),abs(b[i]));
+            a[i] /= div;
+            b[i] /= div;
         }
+
+        arg[{a[i],b[i]}].first++;
+        arg[{a[i],b[i]}].second = 0;
     }
 
     mInt<MOD> tw(2);
 
-    for(auto p:arg){
+    for(auto p : arg){
         if(p.second.second == 1)continue;
 
-        ld t = p.first;
-        ld tinv = (ld)-1.0/t;
+        ll a = p.first.first;
+        ll b = p.first.second;
 
-        int nQ = arg[tinv].first;
         int nP = p.second.first;
+        p.second.second = 1;
 
-        arg[t].second=1;
-        arg[tinv].second=1;
+        ll ha = -b;
+        ll hb = a;
 
-        //db2(t,nP);
-        //db2(-tinv,nQ);
-        //ln;
+        if(hb < 0){ha*=-1; hb*=-1;}
+        if(ha == 0)chmin(hb,1);
+        else if(hb == 0)chmin(ha,1);
+        else{
+            ll div =gcd(abs(ha),abs(hb));
+            ha /= div;
+            hb /= div;
+        }
 
-        mInt<MOD> mul = tw.pow(nQ) + tw.pow(nP) - 1;
-        //cout<<"mlu:"<<mul<<endl;
+        int nQ = arg[{ha,hb}].first;
+        arg[{ha,hb}].second = 1;
+
+        db2(a,b);
+        db2(nP,nQ);
+        mInt<MOD> mul =tw.pow(nP) + tw.pow(nQ) - 1;
+
+        db(mul);ln;
+        
         mAns *= mul;
     }
 
-    int nZ = arg[0.0].first;
-    int nVert = axis.first;
+    if(z>0)mAns += z-1;
+    else mAns -= 1;
 
-    mAns *= tw.pow(nZ) + tw.pow(nVert) - 1;
-    mAns += z-1;
     cout<<mAns<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;

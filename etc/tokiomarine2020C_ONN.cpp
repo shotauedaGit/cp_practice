@@ -28,6 +28,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
+typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -39,23 +40,52 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int h1,m1,h2,m2,k;
-    cin>>h1>>m1>>h2>>m2>>k;
+    int n,k;
+    cin>>n>>k;
 
-    int st = h1*60 + m1;
-    int ed = h2*60 + m2;
+    vector<int> a(n,0);
+    rep(i,n)cin>>a[i];
 
-    ed -= k;
 
-    cout<<ed - st<<endl;
+    rep(i,k+1){
 
+        vector<int> cnt(n,0);
+        cout<<"Turn:";
+        printf("%4d  ",i);
+        
+        if(i!=0){
+            rep(p,n){
+                int li = a[p];
+                cnt[p]++;
+                rep(j,li){
+                    int d=j+1;
+                    if(p-d >= 0)cnt[p-d]++;
+                    if(p+d <  n)cnt[p+d]++;
+                }
+            }
+        }
+
+        rep(p,n){
+            if(i!=0)a[p] = cnt[p];
+            printf("%2d",a[p]);
+            if(p < n-1)cout<<" ";
+        }
+
+        ln;
+    }
+
+
+    cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

@@ -44,18 +44,19 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int h1,m1,h2,m2,k;
-    cin>>h1>>m1>>h2>>m2>>k;
+    string t;
+    cin>>t;
 
-    int st = h1*60 + m1;
-    int ed = h2*60 + m2;
+    rep(i , t.length()){
+        if(t[i] =='?')t[i] = 'D';
+    }
 
-    ed -= k;
-
-    cout<<ed - st<<endl;
+    cout<<t<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

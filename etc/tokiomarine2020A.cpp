@@ -28,6 +28,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
+typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -39,23 +40,23 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+
+
+
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int h1,m1,h2,m2,k;
-    cin>>h1>>m1>>h2>>m2>>k;
+    string s;
+    cin>>s;
 
-    int st = h1*60 + m1;
-    int ed = h2*60 + m2;
 
-    ed -= k;
-
-    cout<<ed - st<<endl;
-
+    cout<<s.substr(0,3)<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

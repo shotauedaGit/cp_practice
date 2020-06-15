@@ -1,0 +1,32 @@
+﻿  AtCoderSolving.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xtree(1321,1): error C2091: 関数は関数を返せません。
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\set(191): message : コンパイル対象の クラス テンプレート インスタンス化 'std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,true>>' のリファレンスを確認してください
+          with
+          [
+              _Kty=int,
+              _Pr=std::greater<int> (void),
+              _Alloc=std::allocator<int>
+          ]
+C:\Users\ueda\Myfolder\gitrepos\cp_practice\VSsln(debug)\AtCoderSolving\AtCoderSolving\AtCoderSolving.cpp(63): message : コンパイル対象の クラス テンプレート インスタンス化 'std::multiset<int,std::greater<int> (void),std::allocator<int>>' のリファレンスを確認してください
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xtree(1325,1): error C2091: 関数は関数を返せません。
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xmemory(1347,1): error C2207: 'std::_Compressed_pair<_Ty1,_Ty2,false>::_Myval1': クラス テンプレートのメンバーは関数型を取得できません
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xtree(2058): message : コンパイル対象の クラス テンプレート インスタンス化 'std::_Compressed_pair<std::greater<int> (void),std::_Compressed_pair<std::allocator<std::_Tree_node<int,std::_Default_allocator_traits<_Alloc>::void_pointer>>,std::_Tree_val<std::_Tree_simple_types<int>>,true>,false>' のリファレンスを確認してください
+          with
+          [
+              _Alloc=std::allocator<int>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xutility(5404,1): error C2197: '_Keycmp (__cdecl &)': 呼び出しに対する引数が多すぎます
+          with
+          [
+              _Keycmp=std::greater<int> (void)
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xtree(1786): message : コンパイルされている変数テンプレート 'const bool _Nothrow_compare<std::greater<int> __cdecl(void),int,int>' のリファレンスをご参照ください
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xtree(1785): message : クラス テンプレート メンバー関数 'std::pair<std::_Tree_node<int,std::_Default_allocator_traits<_Alloc>::void_pointer> *,std::_Tree_node<int,std::_Default_allocator_traits<_Alloc>::void_pointer> *> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,true>>::_Eqrange<int>(const _Other &) noexcept(<expr>) const' のコンパイル中
+          with
+          [
+              _Alloc=std::allocator<int>,
+              _Kty=int,
+              _Pr=std::greater<int> (void),
+              _Other=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xutility(5403,47): error C2056: 誤った式になっています。

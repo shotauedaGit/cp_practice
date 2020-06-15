@@ -41,8 +41,55 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n;
-    cin >>n;
+    int n,m,k;
+    cin >>n>>m>>k;
+
+    vector<set<int>> blk(n),fnd(n);
+    vector<vector<int>> fndTree(n);
+
+
+    rep(i,m){
+        int a,b;
+        cin>>a>>b;
+        --a;--b;
+
+        fnd[a].insert(b);
+        fnd[b].insert(a);
+
+        fndTree[a].eb(b);
+        fndTree[b].eb(a);
+
+    }
+
+    rep(i,k){
+        int a,b;
+        cin>>a>>b;
+        --a;--b;
+
+        fnd[a].insert(b);
+        fnd[b].insert(a);
+    }
+
+    vector<int> glp(n,-1);
+    int gln = 0;
+
+    rep(i,n){
+        if(glp[i]!=-1)continue;
+
+        stack<int> st;
+        st.push(i);
+
+        while(!st.empty()){
+            int cur = st.top();st.pop();
+
+            rep(j , fndTree[i].size() ){
+                int nx = fndTree[i][j];
+                
+            }
+
+
+        }
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
     cout<<ans<<endl;

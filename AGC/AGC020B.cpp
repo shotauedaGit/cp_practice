@@ -40,34 +40,38 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-
 int main(){
 
-    bool flag=true;
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    int k;
+    cin>>k;
 
-    int pos = 0;
-    string tgt = "KIHBR";
+    ll S=2,L=2;
+    vector<ll> a(k+1);
+    a[0] = 1;
 
-    rep(i , s.length()){
-        if(s[i] == 'A')continue;
-        if(pos > 4)break;
+    rep(i,k)cin>>a[i+1];
+    if(a[k] != 2){cout<<-1<<endl;return 0;}
 
-        if(s[i] != tgt[pos]){
-            flag = false;
-            break;
-        }else{
-            pos++;
+    rep(i,k){
+        int p = k-1-i;
+        ll prS=S,prL=L;
+        S = ( (S+a[p]-1)/a[p] ) * a[p];
+        L = ( (L+a[p+1]-1)/a[p] ) * a[p];
+
+        if(L < prS ){
+            cout<<-1<<endl;return 0;
         }
     }
 
-    //cout <<fixed<<setprecision(16)<< << endl;
-    //cout <<  << endl;
 
-    if(flag)cout << "YES" <<endl;
-    else cout << "NO" <<endl;
-    
+    cout<<S<<" "<<L<<endl;
+
+    //cout <<fixed<<setprecision(16)<< << endl;
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
+
     return 0;
 }

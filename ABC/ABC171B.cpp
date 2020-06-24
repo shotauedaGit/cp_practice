@@ -41,33 +41,31 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+
+
+
 int main(){
 
-    bool flag=true;
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    int n,k;
+    cin>>n>>k;
+    vector<int> a(n);
+    rep(i,n)cin>>a[i];
 
-    int pos = 0;
-    string tgt = "KIHBR";
+    sort(all(a));
 
-    rep(i , s.length()){
-        if(s[i] == 'A')continue;
-        if(pos > 4)break;
-
-        if(s[i] != tgt[pos]){
-            flag = false;
-            break;
-        }else{
-            pos++;
-        }
+    rep(i,k){
+        ans += a[i];
     }
 
-    //cout <<fixed<<setprecision(16)<< << endl;
-    //cout <<  << endl;
+    cout<<ans<<endl;
 
-    if(flag)cout << "YES" <<endl;
-    else cout << "NO" <<endl;
-    
+    //cout <<fixed<<setprecision(16)<< << endl;
+
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
+
     return 0;
 }

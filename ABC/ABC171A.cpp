@@ -41,33 +41,22 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+
+
+
 int main(){
 
-    bool flag=true;
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    char c;
+    cin>>c;
 
-    int pos = 0;
-    string tgt = "KIHBR";
-
-    rep(i , s.length()){
-        if(s[i] == 'A')continue;
-        if(pos > 4)break;
-
-        if(s[i] != tgt[pos]){
-            flag = false;
-            break;
-        }else{
-            pos++;
-        }
-    }
+    if(isupper(c))flag=true;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-    //cout <<  << endl;
+    if(flag)cout << "A" <<endl;
+    else cout << "a" <<endl;
 
-    if(flag)cout << "YES" <<endl;
-    else cout << "NO" <<endl;
-    
     return 0;
 }

@@ -41,33 +41,32 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+
+
+
 int main(){
 
-    bool flag=true;
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
+    int n;
+    cin>>n;
 
-    int pos = 0;
-    string tgt = "KIHBR";
+    int Allxor = 0;
 
-    rep(i , s.length()){
-        if(s[i] == 'A')continue;
-        if(pos > 4)break;
+    vector<int> a(n);
+    rep(i,n){
+        cin>>a[i];
+        Allxor ^= a[i];
+    }
 
-        if(s[i] != tgt[pos]){
-            flag = false;
-            break;
-        }else{
-            pos++;
-        }
+    rep(i,n){
+        cout<<(Allxor^a[i]);
+        if(i!=n-1)cout<<" ";
     }
 
     //cout <<fixed<<setprecision(16)<< << endl;
-    //cout <<  << endl;
-
-    if(flag)cout << "YES" <<endl;
-    else cout << "NO" <<endl;
-    
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
     return 0;
 }

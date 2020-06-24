@@ -41,33 +41,48 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+
+
+
 int main(){
 
-    bool flag=true;
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    string s;
-    cin>>s;
-
-    int pos = 0;
-    string tgt = "KIHBR";
-
-    rep(i , s.length()){
-        if(s[i] == 'A')continue;
-        if(pos > 4)break;
-
-        if(s[i] != tgt[pos]){
-            flag = false;
-            break;
-        }else{
-            pos++;
-        }
+    int n,m;
+    cin>>n;
+    
+    vector<int> a(n),buk(100001,0);
+    rep(i,n){
+        cin>>a[i];
+        buk[a[i]]++;
     }
 
-    //cout <<fixed<<setprecision(16)<< << endl;
-    //cout <<  << endl;
+    rep1(i,1,100001){
+        ans += (ll)buk[i]*i;
+    }
 
-    if(flag)cout << "YES" <<endl;
-    else cout << "NO" <<endl;
-    
+    int q;
+    cin>>q;
+
+    rep(i,q){
+        int b,c;
+        cin>>b>>c;
+
+        ans += (ll)(c-b)*buk[b];
+
+        buk[c] +=buk[b];
+        buk[b] = 0;
+
+        cout<<ans<<endl;
+
+    }
+
+
+    //cout <<fixed<<setprecision(16)<< << endl;
+
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
+
     return 0;
 }

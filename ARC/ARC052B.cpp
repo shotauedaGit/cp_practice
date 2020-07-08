@@ -41,22 +41,66 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+struct corn{
+    ll x=0,r=0,h=0;
+    corn(){}
+    corn(ll xi,ll ri,ll hi):x(xi),r(ri),h(hi){}
+};
+
 
 int main(){
 
     bool flag=false;
-    ll ans=0,sum=0;
+    ll ans=0;
 
-    int n,m;
-    cin>>n;
+    int n,q;
+    cin>>n>>q;
 
 
-    cout<<ans<<endl;
+    const ld PI = acosl(-1.0);
+    vector<ld> sum(20010,0);
+    vector<corn> cornArr(n);
+
+    rep(i,n){
+        ll xi,ri,hi;
+        cin>>xi>>ri>>hi;
+        cornArr[i] = corn(xi,ri,hi);
+    }
+
+    rep(i,n){
+        ll xi,ri,hi;
+        xi = cornArr[i].x;
+        ri = cornArr[i].r;
+        hi = cornArr[i].h;
+
+        rep1(j,1,hi+1){
+            ld p = j*j*j*ri*ri*PI;
+            ld q = hi*hi*3;
+
+            sum[xi+(hi-j)] = p/q;
+        }
+    }
+
+    rep1(i,1,20010){
+        sum[i] += sum[i-1];
+    }
+
+
+    rep(i,q){
+        int a,b;
+        cin>>a>>b;
+
+        if(a == b)cout<<"0.000000"<<endl;
+        else if(a == 0){
+            cout<<fixed<<setprecision(16)<< sum[b-1]<<endl;
+        }else{
+            cout<<fixed<<setprecision(16)<< sum[b-1] - sum[a-1]<<endl;
+        }
+    }
+
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

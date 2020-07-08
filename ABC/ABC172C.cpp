@@ -42,14 +42,62 @@ int dy[4]={0,1,0,-1};
 
 
 
+
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int n,m,k;
+    cin>>n>>m>>k;
 
+    vector<ll> a(n),sa(n);
+    vector<ll> b(m),sb(m);
+
+    rep(i,n)cin>>a[i];
+    rep(i,m)cin>>b[i];
+
+    sa[0] = a[0];
+    sb[0] = b[0];
+
+    rep1(i,1,n){
+        sa[i] = sa[i-1] + a[i];
+    }
+    rep1(i,1,m){
+        sb[i] = sb[i-1] + b[i];
+    }
+
+    auto st = upper_bound(all(sa),k);
+    if(st == sa.begin()){
+    }else{
+
+    --st;
+
+    while(1){
+        int nA = st - sa.begin() + 1;
+
+        ll t = *st;
+
+        auto st2 = upper_bound(all(sb),k-t);--st2;
+        int nB = st2 - sb.begin() + 1;
+
+        //db2(nA,t);
+        //db2(nB,k-t);
+        //ln;
+
+        --st;
+        chmax(ans,nA+nB);
+
+        if(nA == 1)break;
+    }
+
+    }
+
+
+
+    int allB = upper_bound(all(sb),k) - sb.begin();
+    chmax(ans,allB);
 
     cout<<ans<<endl;
 

@@ -42,6 +42,8 @@ int dy[4]={0,1,0,-1};
 
 
 
+
+
 int main(){
 
     bool flag=false;
@@ -51,7 +53,7 @@ int main(){
     cin>>n;
 
 
-    cout<<ans<<endl;
+    cout<<n + n*n + n*n*n<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

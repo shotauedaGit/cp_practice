@@ -41,20 +41,25 @@ int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
 
+ll sig(ll n){
+    return n*(n+1)/2;
+}
+
 
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    ll n;
     cin>>n;
 
+    for(ll i=1;i <= n; ++i){
+        ans += (i * sig(n/i));
+    }
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

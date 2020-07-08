@@ -42,13 +42,20 @@ int dy[4]={0,1,0,-1};
 
 
 
+
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    string s,t;
+    cin>>s>>t;
+
+    rep(i , s.length())
+    {
+        if(s[i]!= t[i])++ans;
+    }
 
 
     cout<<ans<<endl;

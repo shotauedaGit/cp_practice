@@ -60,12 +60,19 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int t;
+    cin>>t;
+    rep(i,t){
+        int n;cin>>n;
+        cout<<2<<endl;
+        rep(op,n-1){
+            if(op==0)cout<<n<<" "<<n-1<<endl;
+            else cout<<n+1-op<<" "<<n-1-op<<endl;
+        }
+    }
 
 
-    cout<<ans<<endl;
-
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
 
     //if(flag)cout << "Yes" <<endl;

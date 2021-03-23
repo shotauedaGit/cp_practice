@@ -40,17 +40,6 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
-
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
-}
-
 
 
 
@@ -60,10 +49,25 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    ll x,k,d;
+    cin>>x>>k>>d;
+
+    x = abs(x);
+
+    ll ans1=LINF; 
+    ll ans2=LINF;
+
+    if((x/(d*2))*2 <= k)ans1 = x - (x/(d*2))*(d*2);
+    else {
+        ans1 = x - k*d;
+        //db(k*d)ln;
+    }
+    if((x/(d*2))*2 + 2 <= k)ans2 = x - ((x/(d*2)) + 1)*(d*2);
 
 
+
+    ans = min(abs(ans1),abs(ans2));
+    //db2(abs(ans1),abs(ans2));ln;
     cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;

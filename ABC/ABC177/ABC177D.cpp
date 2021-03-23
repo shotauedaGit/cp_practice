@@ -40,20 +40,8 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
-
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
-}
-
-
-
-
+vector<bool> vis(200010,false);
+vector<vector<int>> g(200010);
 
 int main(){
 
@@ -61,15 +49,54 @@ int main(){
     ll ans=0,sum=0;
 
     int n,m;
-    cin>>n;
+    cin>>n>>m;
 
+    set<P> rel;
 
-    cout<<ans<<endl;
+    rep(i,m){
+        int a,b;
+        cin>>a>>b;
+        --a;--b;
+
+        if(rel.find(P(a,b))!=rel.end() || rel.find(P(b,a))!=rel.end())continue;
+
+        g[a].emplace_back(b);rel.insert(P(a,b));//db2(a,b);ln;
+        g[b].emplace_back(a);rel.insert(P(b,a));//db2(b,a);ln;
+
+    }
+
+    int mx_n = -1;
+    rep(i,n){
+        if(vis[i])continue;
+
+        int n_connected_element = 1;
+        stack<int> st;
+        st.push(i);
+        vis[i] = true;
+
+        while(!st.empty()){
+            int cur = st.top();st.pop();
+
+            for(int j = 0 ; j < g[cur].size(); ++j){
+                int nx = g[cur][j];
+
+                if(vis[nx])continue;
+
+                //db2(cur,nx);ln;
+
+                st.push(nx);
+                vis[nx] = true;
+                ++n_connected_element;
+            }
+        }
+
+        chmax(mx_n,n_connected_element);
+    }
+
+    cout<<mx_n<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

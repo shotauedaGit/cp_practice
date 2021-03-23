@@ -37,8 +37,7 @@ typedef pair<P,P> PP;
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 
-int dx[4]={1,0,-1,0};
-int dy[4]={0,1,0,-1};
+
 
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
@@ -51,23 +50,76 @@ double Timer_end(){
     return elapsed;
 }
 
+#define Pnum 1000
+#define Nnum 100
 
+int dx[4]={1,-1,-1,1};
+int dy[4]={-1,-1,1,1};
 
+int g[100][100]={};
 
+    bool is_out(int x,int y){
+        if(!(0<=x&&x<Nnum && 0<=y&&y<Nnum))return true;
+        return false;
+    }
 
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int n=100;
+    srand(time(NULL));
 
 
-    cout<<ans<<endl;
+    string out_file = "HC\\future2018q\\in_answer.txt";
+    ofstream write_file_1;
+    write_file_1.open(out_file, std::ios::out);
 
+    write_file_1<<1000<<endl;
+
+    rep(i,1000){
+        int x,y,h;
+        x = rand()%n;
+        y = rand()%n;
+        h = rand()%n + 1;
+
+        write_file_1<<x<<" "<<y<<" "<<h<<endl;
+
+        g[x][y]+=h;
+        for(int j=1;j<h;j++){
+            int cx = x;
+            int cy = y + j;
+            rep(di,4){
+                rep(k,j){ 
+                    cx += dx[di];cy += dy[di];
+                    if(is_out(cx,cy)==false){
+                        g[cx][cy] += h-j;
+                        //cout<<"add:"<<cx<<" "<<cy<<" "<<g[cx][cy]<<endl;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+    string filename = "HC\\future2018q\\in.txt";
+    ofstream write_file;
+    write_file.open(filename, std::ios::out);
+
+        rep(i,Nnum){
+            rep(j,Nnum){
+                write_file<<g[j][i]<<" ";
+            }
+            write_file<<endl;
+        }
+
+    cout<<"done"<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

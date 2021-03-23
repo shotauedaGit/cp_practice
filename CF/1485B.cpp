@@ -51,25 +51,59 @@ double Timer_end(){
     return elapsed;
 }
 
-
-
-
-
 int main(){
-
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int n,q;ll k;
+    cin>>n>>q>>k;
+
+    vector<ll> a(n);
+    vector<ll> s(n);
+    
+    rep(i,n)cin>>a[i];
+
+    s[0] = a[1] - 2;
+    if(n==1)s[0] = k-1;
+    //cout<<1<<" :"<<a[0]-1<<" self "<<a[1]-a[0]-1<<endl;
+
+    rep1(i,1,n-1){
+        s[i] = s[i-1] + a[i+1] - a[i-1] - 2;
+        //cout<<i+1<<" :"<<a[i]-a[i-1]-1<<" self "<<a[i+1]-a[i]-1<<endl;
+    }
+    
+    if(n!=1)s[n-1] = s[n-2] + k - a[n-2] - 1;
+    
+    //cout<<n<<" :"<<a[n-1]-a[n-2]-1<<" self "<<k-a[n-1]<<endl;
 
 
-    cout<<ans<<endl;
+
+    rep(i,q){
+        int li,ri;
+        cin>>li>>ri;li--;ri--;
+
+        ll pat=0;
+        if(li==0){
+            pat = s[ri];
+        }
+        else {
+            pat = s[ri] - s[li-1];
+        }
+
+        //cout<<"pat :"<<pat<<" + ";
+
+        ll add=0;
+        if(li!=0)add += a[li-1];
+        if(ri!=n-1)add += -a[ri+1]+k+1;
+        
+        pat+=add;
+        //cout<<add<<endl;
+
+        cout<<pat<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

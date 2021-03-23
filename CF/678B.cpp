@@ -60,14 +60,25 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int t,n;
+    cin>>t;
 
+    rep(i,t){
+        cin>>n;
+        
+        rep(p,n){
+            rep(q,n){
+                if(q == p || q == (p+1)%n) cout<<1;
+                else cout<<0;
 
-    cout<<ans<<endl;
+                if(q+1 != n)cout<<" ";
+            }
+            cout<<endl;
+        }
+    }
 
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

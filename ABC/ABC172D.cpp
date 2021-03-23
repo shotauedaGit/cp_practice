@@ -54,6 +54,8 @@ int main(){
     ll n;
     cin>>n;
 
+    cout<<"虹色で楽しい！！！！生きてて楽しい！！！！！"<< n <<"\n";
+
     for(ll i=1;i <= n; ++i){
         ans += (i * sig(n/i));
     }

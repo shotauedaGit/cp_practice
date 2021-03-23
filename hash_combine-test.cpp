@@ -40,34 +40,63 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
+/*
+struct str_test{
+    int id = -1;
+    str_test *nx = NULL;
 
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
+    str_test(){};
+    str_test(int _id):id(_id){};
+    str_test(int _id,str_test *_nx):id(_id),nx(_nx){};
+};
+*/
+
+size_t hash_v(int h1,int h2,int h3){
+    size_t seed = 0;
+    seed ^= h1 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    seed ^= h2 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    seed ^= h3 + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    return seed;
 }
 
 
-
-
-
 int main(){
-
     bool flag=false;
     ll ans=0,sum=0;
 
     int n,m;
     cin>>n;
 
+    unordered_map<ll,int> hsh_mp;
 
-    cout<<ans<<endl;
+    auto not_find = hsh_mp.end();
+    ll cnt = 0;
 
+    rep(i,n+1){
+        rep(j,n+1){
+            rep(k,n+1){
+
+                if( hsh_mp[hash_v(i,j,k)] != 0){
+                    //cout<<" ############### "<<endl;
+                    db3(i,j,k);cout<<"occurs collision";
+                    cout<<"   hash : "<<hash_v(i,j,k)<<endl;
+                }
+
+                hsh_mp[hash_v(i,j,k)] = ++cnt;
+            }
+        }
+
+        if(i % 100 == 0){
+            //cout<<cnt<<"  pairs done"<<endl;
+        }
+    }
+
+    cout<<cnt<<"  pairs done"<<endl;
+
+
+
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

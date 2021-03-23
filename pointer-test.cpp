@@ -40,16 +40,41 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
+struct str_test{
+    int id = -1;
+    str_test *nx = NULL;
 
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
-}
+    str_test(){};
+    str_test(int _id):id(_id){};
+    str_test(int _id,str_test *_nx):id(_id),nx(_nx){};
+};
+
+
+class Mystr{
+    public:
+    int val = -1;
+    Mystr(){}
+    Mystr(int _v){val =_v;}
+};
+
+class tst{
+    public:
+    Mystr a,b,c;
+    tst(){
+        a = Mystr(1);
+        b = Mystr(2);
+        c = Mystr(3);
+    }
+
+    Mystr& fetch_a(){
+        return a;
+    }
+
+    void fetch_a2(Mystr &a){
+        a = fetch_a();
+    }
+};
+
 
 
 
@@ -61,10 +86,35 @@ int main(){
     ll ans=0,sum=0;
 
     int n,m;
-    cin>>n;
 
+    str_test s1(1);
+    str_test s2(2);
+    str_test s3(3);
 
-    cout<<ans<<endl;
+    s1.nx = &s2;
+    s2.nx = &s3;
+    s3.nx = &s1;
+    /*
+    db3(&s1,&s2,&s3);ln;
+    db3(s1.nx,s2.nx,s3.nx);ln;
+    db3((*(s1.nx)).nx,(*(s2.nx)).nx,(*(s3.nx)).nx);ln;
+    */
+
+    tst test_str;
+    Mystr d(999);
+    Mystr A1(99),&A12 = d,&A12_1 = d;
+
+    //A1 = test_str.fetch_a();
+    test_str.fetch_a2(A12);
+    //test_str.fetch_a2(A12_1);
+
+    cout<<"A1 ="<<A1.val<<endl;
+    cout<<"A12 ="<<A12.val<<endl;
+    cout<<"A12 ="<<A12_1.val<<endl;
+
+    
+
+    //cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

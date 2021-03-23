@@ -52,24 +52,22 @@ double Timer_end(){
 }
 
 
-
-
-
 int main(){
-
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int t,a,b,c,d;
+    cin>>t;
 
+    rep(i,t)
+    {
+        cin>>a>>b>>c>>d;
+        cout<< max(a+b,c+d) <<endl;
+    }
 
-    cout<<ans<<endl;
-
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

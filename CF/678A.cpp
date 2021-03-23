@@ -51,23 +51,27 @@ double Timer_end(){
     return elapsed;
 }
 
-
-
-
-
 int main(){
-
     bool flag=false;
     ll ans=0,sum=0;
+    
+    int t;cin>>t;
 
-    int n,m;
-    cin>>n;
+    rep(i,t){
+        int n,m;
+        cin>>n>>m;
 
+        int ai,s=0;
+        rep(j,n){
+            cin>>ai;
+            s += ai;
+        }
+        if(s == m)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
 
-    cout<<ans<<endl;
-
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

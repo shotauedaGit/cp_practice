@@ -40,31 +40,75 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
-
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
-}
 
 
-
-
+vector<int> app(1000010,0);
+vector<bool> is_prime(1000010,true);
 
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    int n;
     cin>>n;
+    vector<int> a(n);
+    vector<bool> isNOTcoprime(n,false);
+
+    rep(i,n){
+        int ai;
+        cin>>ai;
+        a[i] = ai;
+        app[ai]++;
+    }
+
+    ll g = gcd(a[0],a[1]);
+    //db(g);ln;
+    rep1(i,2,n){
+        g = gcd(g,a[i]);
+        //db(g);ln;
+    }
+
+    if(g != 1){
+        cout<<"not coprime"<<endl;
+        return 0;
+    }
+
+    //sort(all(a));
+    bool p_cop = true;
 
 
-    cout<<ans<<endl;
+    vector<int> prime;
+    rep1(i,2,1000001){
+        if(is_prime[i]){
+            prime.emplace_back(i);
+
+            int p = i*2;
+            while(p <= 1000000){is_prime[p]=false;p+=i;}
+        }
+    }
+
+    
+    for(int pi : prime){
+        int cnt = 0;
+        int p = pi;
+        
+        while(p <= 1000001){
+            if(app[p] != 0)++cnt;
+            p += pi;
+        }
+
+        //db2(pi,cnt);ln;
+
+        if(cnt >= 2)p_cop=false;
+        if(!p_cop)break;
+    }
+
+    if(p_cop){
+        cout<<"pairwise coprime"<<endl;
+    }else{
+        cout<<"setwise coprime"<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

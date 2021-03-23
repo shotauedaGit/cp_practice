@@ -40,19 +40,6 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
-int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
-
-chrono::system_clock::time_point  start;
-void Timer_start(){start = std::chrono::system_clock::now();}
-double Timer_end(){
-    auto end = std::chrono::system_clock::now();
-    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
-    return elapsed;
-}
-
-
-
 
 
 int main(){
@@ -60,14 +47,46 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    int n;
     cin>>n;
+    vector<ll> a(n+1,0);
+    a[n] = -1;
 
+    rep(i,n)cin>>a[i];
 
-    cout<<ans<<endl;
+    int p = 0;
+    int mode = 1;
 
+    ll g=1000,k=0;
+
+    while(1){
+        if(mode == 1){
+
+            while(a[p] >= a[p+1] && p<n)++p;
+            mode = 0;
+
+            if(p >= n)break;
+            k += g/a[p];
+            g -= (g/a[p])*a[p];
+        
+        } else {
+        
+            while(a[p] <= a[p+1] && p<n)++p;
+            mode = 1;
+
+            if(p >= n)break;
+            g += k*a[p];
+            k = 0;
+        }
+
+        //cout<<"day "<<p+1;
+        //db2(g,k);ln;
+
+        ++p;
+    }
+
+    cout<<g<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

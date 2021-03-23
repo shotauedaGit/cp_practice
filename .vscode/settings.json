@@ -10,7 +10,10 @@
         "unordered_set": "cpp",
         "functional": "cpp",
         "type_traits": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "chrono": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp"
     },
     "python.pythonPath": "C:\\Users\\ueda\\Anaconda3\\python.exe"
 }

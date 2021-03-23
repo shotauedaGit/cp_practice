@@ -60,14 +60,23 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int t,n,k;
+    cin>>t;
 
+    rep(i,t){
+        cin>>n>>k;k--;
+        ll place;
 
-    cout<<ans<<endl;
+        if(n%2==0)place = k%n;
+        else{
+            place = k+ (k/(n/2));
+            //cout<<"place : "<<k<<"+"<<(k/(n/2))<<endl;
+            place = place%n;
+        }
+        cout<<place+1<<endl;
+    }
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

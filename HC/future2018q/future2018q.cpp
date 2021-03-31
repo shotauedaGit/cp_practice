@@ -54,16 +54,22 @@ double Timer_end(){
 #define Pnum 1000
 #define Nnum 100
 
+bool DBG = false;
 int input[Nnum][Nnum]={};
+
+//bool operator<(const Sol& a, const Sol& b)const{return (a.diff < b.diff);}
+//bool operator>(const Sol& a, const Sol& b)const{return (a.diff > b.diff);}
 
 struct Sol{
     ll diff = -1;
     int op[Pnum][3];
+    bool changed[Pnum];
 
     void copy(const Sol &src){
         diff = src.diff;
         rep(i,Pnum){
             op[i][0]=src.op[i][0]; op[i][1]=src.op[i][1]; op[i][2]=src.op[i][2];
+            changed[i]=true;
         }
     }
 
@@ -71,7 +77,9 @@ struct Sol{
         this->copy(src);
         return *this;
     }
-
+    bool operator<(const Sol& src)const{return (diff < src.diff);}
+    bool operator>(const Sol& src)const{return (diff > src.diff);}
+    
     Sol(){
         //cout<<"sol constructor"<<endl;
         rep(i,Pnum){
@@ -94,6 +102,41 @@ struct Sol{
             op[i][2] = (rand()%Nnum)+1;
         }
         //cout<<"randmoize end"<<endl;
+    }
+
+    void change_little(int p_change,int h_change,double prob){
+        bool change = (rand() < RAND_MAX*prob);
+
+        rep(i,Pnum){
+            change = (rand() < RAND_MAX*prob);
+            changed[i] = change;
+            if(!change)continue;
+
+            int ch_x = rand()%(2*p_change+1) - p_change;
+            int ch_y = rand()%(2*p_change+1) - p_change;
+            int ch_h = rand()%(2*h_change+1) - h_change;
+            
+            op[i][0] += ch_x;
+            op[i][1] += ch_y;
+
+            if(rand()%2){
+                if(op[i][0]<0)op[i][0]=0;
+                if(op[i][0]>=Nnum)op[i][0]=Nnum-1;
+            }else{
+                if(op[i][0]<0 || op[i][0]>=Nnum)op[i][0] += ch_x;
+            }
+
+            if(rand()%2){
+                if(op[i][1]<0)op[i][1]=0;
+                if(op[i][1]>=Nnum)op[i][1]=Nnum-1;
+            }else{
+                if(op[i][1]<0 || op[i][1]>=Nnum)op[i][0] += ch_y;
+            }
+
+            op[i][2] += ch_h;
+            if(op[i][2] < 0)op[i][2]=0;
+        }
+
     }
 
     void eval(){
@@ -128,7 +171,6 @@ struct Sol{
                         }
                     }
                 }
-            
             }
         }
 
@@ -154,57 +196,86 @@ struct future2018q{
     void init(){
         srand(time(NULL));
         int a;
-        rep(i,Nnum){
-            rep(j,Nnum){
-                cin>>a;
-                input[i][j]=a;
+
+        if(DBG){
+            ifstream ifs("HC\\future2018q\\in.txt");
+            rep(i,Nnum){
+                rep(j,Nnum){
+                    ifs>>a;
+                    input[i][j]=a;
+                }
+            }
+        }else{
+            rep(i,Nnum){
+                rep(j,Nnum){
+                    cin>>a;
+                    input[i][j]=a;
+                }
             }
         }
-        //cout<<"input done"<<endl;
+        
+        if(DBG)cout<<"input done"<<endl;
     }
 
     void solve(){
-        //cout<<"slv:begin "<<endl;
-        
         solution.randomize();
-
-        //cout<<"slv:eval begin "<<endl;
         solution.eval();
-        
         bestSOl = solution;
-        
+
         Timer_start();
-        //cout<<"ms:"<<Timer_end()<<endl;
-
         priority_queue<ll,vector<ll>,greater<ll>> score;
+        priority_queue< Sol,vector<Sol>,greater<Sol> > ranking_list;
 
-        while (Timer_end() < 5500){
-            //cout<<"ms:"<<Timer_end()<<endl;
-            score.push(solution.diff);
+        while (Timer_end() < 3000){
+            if(DBG)cout<<"ms:"<<Timer_end()<<endl;
+            ranking_list.push(solution);
 
             solution.randomize();
             solution.eval();
-            //cout<<"score:"<<solution.diff;
             if(solution.diff < bestSOl.diff){
                 bestSOl = solution;
-                //cout<<"(best)";
             }
-            //cout<<endl
+            if(DBG)cout<<Timer_end()<<" , "<<ranking_list.size()<<endl;
         }
 
-
-        ofstream ofs_rank("HC\\future2018q\\top10.txt", ios::app);
-        cout<<"top 10 ranking"<<endl;
+        int r=20,pass=5;
+        priority_queue<Sol,vector<Sol>,greater<Sol>> top20,top20_buf;
+        rep(i,20){
+            top20.push(ranking_list.top());
+            ranking_list.pop();
+        }
         
-        int ranking=30;
-        rep(i,ranking){
-            ofs_rank<<score.top();
-            if(i+1!=ranking)ofs_rank<<",";
+        while(Timer_end() < 5500){
+            rep(i,r){
+                if(i < pass){
+                    top20_buf.push(top20.top());
+                    top20.pop();
+                }else{
+                    Sol tmp=(top20.top());
+                    ll tmpdiff = tmp.diff;
+                    tmp.change_little(3,2,1);
 
-            cout<<score.top()<<endl;
-            score.pop();
+                    if(tmp.diff < tmpdiff)top20_buf.push(tmp);
+                    top20_buf.push(top20.top());
+                    top20.pop();
+                }
+            }
+
+            top20 = top20_buf;
+            while(!top20_buf.empty())top20_buf.pop();
         }
-        ofs_rank<<endl;
+
+
+        if(!DBG)return;
+        ofstream ofs_rank("HC\\future2018q\\top10.txt", ios::app);
+
+        int ranking=20;
+        rep(i,ranking){
+            if(DBG)ofs_rank<<(top20.top()).diff;
+            if(i+1!=ranking)if(DBG)ofs_rank<<",";
+            top20.pop();
+        }
+        if(DBG)ofs_rank<<endl;
 
     }
 
@@ -214,7 +285,7 @@ struct future2018q{
             int x=bestSOl.op[i][0];
             int y=bestSOl.op[i][1];
             int h=bestSOl.op[i][2];
-            //cout<<x<<" "<<y<<" "<<h<<endl;
+            if(!DBG)cout<<x<<" "<<y<<" "<<h<<endl;
         }
     }
 };
@@ -226,7 +297,7 @@ int main(){
     future2018q prob;
     
     prob.init();
-    rep(i,20)prob.solve();
+    rep(i,1)prob.solve();
     prob.out();
 
     //cout <<fixed<<setprecision(16)<< << endl;

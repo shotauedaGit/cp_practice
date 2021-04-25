@@ -53,8 +53,8 @@ double Timer_end(){
 
 const int W = 10000;
 int N;
-//bool DBG=true;
-bool DBG=false;
+bool DBG=true;
+//bool DBG=false;
 
 struct Ad{
     int xi,yi,x1,y1,x2,y2;
@@ -95,6 +95,20 @@ struct Ad{
         return ret;
     }
 
+    bool is_on(){
+        bool f1=false,f2=false,f3=false,f4=false;
+        if(0<= x1 && x1<= W)f1=true;
+        if(0<= x2 && x2<= W)f2=true;
+        if(0<= y1 && y1<= W)f3=true;
+        if(0<= y2 && y2<= W)f4=true;
+        return f1&&f2&&f3&&f4;
+    }
+    bool contains_point(){
+        bool f1=false,f2=false;
+        if(x1<= xi && xi<=x2)f1=true;
+        if(y1<= yi && yi<=y2)f2=true;
+        return f1&&f2;
+    }
     bool trsf(int mode,int d){
         bool formed = false;
         switch (mode){
@@ -125,6 +139,38 @@ struct Ad{
         default:
             break;
         }
+        return formed;
+    }
+    bool move(int mode,int d){
+        bool formed;
+        switch (mode){
+        case 1:
+            y1 -= d; y2-=d;
+            if(0<= y1  && y1 <= W){formed = true;}
+            else y1 += d;y2 += d;
+            break;
+
+        case 2:
+            x2 += d; x1 += d;
+            if(0<= x2  && x2 <= W){formed = true;}
+            else x2 -= d;x1 -= d;
+            break;
+        
+        case 3:
+            y2 += d; y1 += d;
+            if(0<= y2 &&  y2 <= W){formed = true;}
+            else y2 -= d; y1 -= d;
+            break;
+
+        case 4:
+            x1 -= d;x2 -= d;
+            if(0<= x1 && x1 <= W){formed = true;}
+            else x1 += d;x2 += d;
+            break;
+        
+        default:
+            break;
+        }
 
         return formed;
     }
@@ -136,6 +182,7 @@ struct AHC001{
     vector<Ad> Ads;
     vector<double> p_vec;
     int loop=0,improved=0;
+    int score_down=0;
 
     bool conj(Ad &a,Ad &b){
 
@@ -171,9 +218,19 @@ struct AHC001{
     }
 
     int d(int cur_time){
-        float r = ((4800.0-cur_time)/cur_time)*10;
+        //float r = ((4800.0-cur_time)/cur_time)*10;
         //return max((int)r,1);
         return 1;
+    }
+
+    float T(int cur_time){
+        float c = 0.0001;
+        float p = c*((4800.0-cur_time)/4800.0);
+        if(cur_time < 1000){
+            return 0;
+        }else{
+            return p;
+        }
     }
 
     void solve(){
@@ -182,21 +239,27 @@ struct AHC001{
         while(Timer_end() < 4800){
 
             ++loop;
-            if(loop%(2000000/10) == 0 && (DBG)){
-                cout<<"loop: "<<loop
-                <<" imp: "<<improved;
+            if(loop%(3000000/10) == 0 && (DBG)){
+                cout<<"time: "<<Timer_end()
+                <<" imp: "<<improved
+                <<" down: "<<score_down;
                 double score=0;
                 rep(i,N)score+=p_vec[i];
                 cout<<" sc : "<< score/N <<endl;
             }
 
             int target = rand()%N;
+            int mode0 = rand()%2;
+            //int mode0 = 0;
             int mode = (rand()%4) + 1;
             int delta = d(Timer_end());
 
             double old_P,new_P;
             old_P = Ads[target].calc_P();
-            bool formed = Ads[target].trsf(mode,delta);
+            bool formed=false;
+
+            if(mode0==0)formed = Ads[target].trsf(mode,delta);
+            else formed = Ads[target].move(mode,delta);
 
             if(!formed)continue;
 
@@ -215,11 +278,21 @@ struct AHC001{
 
             new_P = Ads[target].calc_P();
 
-            if(formed && (new_P < old_P)){
-                Ads[target].trsf(mode,-delta);
-            }else{
+            if(Ads[target].contains_point() == false){
+                    if(mode0==0)Ads[target].trsf(mode,-delta);
+                    else Ads[target].move(mode,-delta);
+
+            }else if(new_P > old_P){
                 p_vec[target] = new_P;
                 improved++;
+            }else{
+                if(T(Timer_end())*32767.0 > rand() ){
+                    p_vec[target] = new_P;
+                    score_down++;
+                }else{
+                    if(mode0==0)Ads[target].trsf(mode,-delta);
+                    else Ads[target].move(mode,-delta);
+                }
             }
             
         }

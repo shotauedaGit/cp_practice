@@ -51,8 +51,8 @@ double Timer_end(){
     return elapsed;
 }
 
-bool DBG=true;
-//bool DBG=false;
+//bool DBG=true;
+bool DBG=false;
 
 #define D 365
 #define Tp 26
@@ -64,32 +64,118 @@ int s[D][Tp]={};
 
 struct IHC{
 
-    ll S=0;
+    int itr=0,impl=0;
+    ll outS=-INF,solS=-INF;
     int dur[D+1][Tp][3]={};//0:is contest held, 1:until this contest 2:next be held in...
+    
     int output[D]={};
+    int solution[D]={};
 
     void init(){
         if(!DBG){
-
+            int d;
+            cin>>d;
+            rep(i,Tp)cin>>c[i];
+            rep(i,D)rep(j,Tp){
+                cin>>s[i][j];
+            }
         }else{
-            
+            ifstream input("AHC\\IHC\\tester\\example\\sample2.in");
+            int d;
+            input>>d;
+            rep(i,Tp)input>>c[i];
+            rep(i,D)rep(j,Tp){
+                input>>s[i][j];
+            }
         }
+
+        Timer_start();
     }
 
     void solve(){
 
+        int init_itr = 100;
+        rep(i,init_itr){
+            rep(i,D)solution[i] = rand()%Tp;
+            if(chmax(outS,all_eval()))rep(i,D){output[i] = solution[i];}
+        }
+
+        int freq=10;
+        int init_itr2 = 1000;
+        rep(i,init_itr2){
+            rep(i,D){
+                if((rand()%freq) == 0)solution[i] = rand()%Tp;
+            }
+            if(chmax(outS,all_eval()))rep(i,D){output[i] = solution[i];}
+        }
+
+        if(DBG)cout<<"rand change end : "<<Timer_end()<<"ms"<<endl;
+        if(DBG)cout<<"outS "<<outS<<endl;
+
+        rep(i,D)solution[i] = output[i];
+
+        while(Timer_end() < 1900){
+            itr++;
+
+            // random change
+            int chD = rand()%D,pastTp = solution[chD];
+            int chTp = (rand() + solution[chD])%Tp;
+
+            rep(i,1){
+                if(c[pastTp] < c[chTp])break;
+                chTp = (rand() + solution[chD])%Tp;
+            }
+
+            solution[chD] = chTp;
+            solS = all_eval();
+
+            if(chmax(outS,solS)){
+                impl++;
+                //cout<<"impl!! "<<itr<<endl;
+                rep(i,D){output[i] = solution[i];}
+                //if(DBG)cout<<"t: "<<Timer_end()<<" S: "<<outS<<endl;
+            }else{
+                solution[chD] = pastTp;
+            }
+        }
+
+        if(DBG)cout<<"outS "<<outS<<endl;
     }
 
-    ll change_eval(int day,int new_type){
-        ll new_S;
+    ll all_eval(){
+        ll evalS = 0;
 
+        int last_held[Tp] = {};
+        rep(i,Tp) last_held[i]=0;
+        
+        rep(i,D){
+            int held = i+1;
+            int type = solution[i];
 
+            evalS += s[i][type];
+            int d = i - last_held[type];
+            evalS -= (d*(d+1)/2)*c[type];
 
-        S = new_S;
-        return new_S;
+            last_held[type] = held;
+        }
+
+        rep(i,Tp){
+            int d = D - last_held[i];
+            evalS -= (d*(d+1)/2)*c[i];
+        }
+
+        return evalS;
     }
 
     void out(){
+        rep(i,D){
+            if(!DBG)cout<<output[i] + 1<<endl;
+        }
+
+        if(DBG){
+            cout<<"(itr/impl)="<<impl<<"/"<<itr<<" ("<< (double)impl/itr<<" )"<<endl;
+            cout<<outS<<endl;
+        }
 
     }
 };
@@ -97,19 +183,12 @@ struct IHC{
 
 int main(){
 
-    bool flag=false;
-    ll ans=0,sum=0;
+    srand(time(NULL));
+    IHC prob;
+    prob.init();
+    prob.solve();
+    prob.out();
 
-    int n,m;
-    cin>>n;
-
-
-    cout<<ans<<endl;
-
-    //cout <<fixed<<setprecision(16)<< << endl;
-
-    //if(flag)cout << "Yes" <<endl;
-    //else cout << "No" <<endl;
 
     return 0;
 }

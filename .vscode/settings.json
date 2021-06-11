@@ -13,7 +13,14 @@
         "ostream": "cpp",
         "chrono": "cpp",
         "iosfwd": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "system_error": "c",
+        "typeinfo": "c",
+        "cstdlib": "c",
+        "algorithm": "c",
+        "string_view": "cpp",
+        "regex": "cpp"
     },
-    "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python37_64\\python.exe"
+    "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python37_64\\python.exe",
+    "C_Cpp.errorSquiggles": "Disabled",
 }

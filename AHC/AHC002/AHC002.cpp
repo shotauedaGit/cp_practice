@@ -284,6 +284,8 @@ struct AHC002{
 int main(){
 
     srand(time(NULL));
+
+    rand();
     AHC002 pb;
 
     int reps;
@@ -296,6 +298,8 @@ int main(){
     
     pb.out();
     if(DBG)cout<<"    [ave]:: "<<sum/reps<<endl;
+
+    std::hash<string>()("aa");
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

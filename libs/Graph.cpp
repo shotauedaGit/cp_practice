@@ -117,7 +117,6 @@ class Graph{
         edge e(u,v,1);
         g[u].eb(e);
     }
-
     void addE(int u,int v,int cost){ //無効グラフの時は逆方向もちゃんと張ろう
         edge e(u,v,cost);
         g[u].eb(e);

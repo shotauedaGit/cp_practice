@@ -43,7 +43,6 @@ int dy[4]={0,1,0,-1};
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
 
-/*
 chrono::system_clock::time_point  start;
 void Timer_start(){start = std::chrono::system_clock::now();}
 double Timer_end(){
@@ -51,46 +50,68 @@ double Timer_end(){
     double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
     return elapsed;
 }
-*/
 
-class Unionfind{
-    public:
-    
-    int n;vector<int> par;
-    Unionfind(int _n){par.resize(_n);n=_n;init();}
-    void init(){rep(i,n)par[i]=i;}
 
-    int root(int x){// 0-idx
-        if(x == par[x])return x;
-        else return (par[x] = root(par[x]));
+const int DIGIT = 100;
+
+vector<int> conv(ll src){
+    vector<int> ret(DIGIT,0);
+    int i=0;
+    while(src > 0){ret[i++] = src%10;src /= 10;}
+    return ret;
+}
+
+void pri(vector<int> src){
+    int st=0,i=src.size()-1;
+    while(src[i] == 0)--i;
+    while(i>=0)cout<<src[i--];
+}
+
+vector<int> mul(vector<int> x,vector<int> a){
+    vector<int> ax(DIGIT,0);
+    rep(i,a.size()){
+        rep(j,x.size()){
+            int aixi = a[i]*x[j];
+            ax[j+i] += aixi%10;
+            if(j+1 < x.size())ax[j+i+1] += aixi/10;
+        }
     }
-    void unite(int x,int y){par[ root(x) ] = root(y);}
-    bool same(int x,int y){return (root(x) == root(y));}
-};
+    rep(i,x.size()){
+        if(i+1 < x.size())ax[i+1] += (a[i]/10);
+        a[i] = a[i]%10;
+    }
+    return ax;
+}
+
+vector<int> pow(vector<int> base,int power){
+    vector<int> ret = conv(1);
+    if(power==0)return ret;
+    else if(power == 1)return base;
+    else{
+
+        while(power>1){
+            if(power%2==0){power/=2; base=mul(base,base);}
+            else {--power;ret = mul(ret,base);}
+        }
+        ret =mul(ret,base);
+        return ret;
+    }
+}
 
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,q;
-    cin>>n>>q;
-    Unionfind uf = Unionfind(n);
+    ll a,b;
+    cin>>a>>b;
+    cout<<"ab: "; pri(mul(conv(a),conv(b))); cout<<endl;
 
-    rep(i,q){
-        int p,x,y;
-        cin>>p>>x>>y;
-
-        if(p == 0)uf.unite(x,y);
-        else {
-            if(uf.same(x,y))cout<<1<<endl;
-            else cout<<0<<endl;
-        }
-    }
+    cin>>a>>b;
+    cout<<"a^b: "; pri(pow(conv(a),b)); cout<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

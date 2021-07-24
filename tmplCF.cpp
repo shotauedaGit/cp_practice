@@ -43,7 +43,6 @@ int dy[4]={0,1,0,-1};
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
 
-/*
 chrono::system_clock::time_point  start;
 void Timer_start(){start = std::chrono::system_clock::now();}
 double Timer_end(){
@@ -51,44 +50,29 @@ double Timer_end(){
     double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
     return elapsed;
 }
-*/
 
-class Unionfind{
-    public:
-    
-    int n;vector<int> par;
-    Unionfind(int _n){par.resize(_n);n=_n;init();}
-    void init(){rep(i,n)par[i]=i;}
 
-    int root(int x){// 0-idx
-        if(x == par[x])return x;
-        else return (par[x] = root(par[x]));
-    }
-    void unite(int x,int y){par[ root(x) ] = root(y);}
-    bool same(int x,int y){return (root(x) == root(y));}
-};
+
+
 
 int main(){
 
-    bool flag=false;
-    ll ans=0,sum=0;
+    int t;cin>>t;
 
-    int n,q;
-    cin>>n>>q;
-    Unionfind uf = Unionfind(n);
+    rep(tcs,t){
+    
+        bool flag=false;
+        ll ans=0,sum=0;
+        int n,m;
 
-    rep(i,q){
-        int p,x,y;
-        cin>>p>>x>>y;
-
-        if(p == 0)uf.unite(x,y);
-        else {
-            if(uf.same(x,y))cout<<1<<endl;
-            else cout<<0<<endl;
-        }
+        cout<<ans<<endl;
     }
 
+
+    
+
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

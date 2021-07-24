@@ -58,16 +58,43 @@ int main(){
 
     int n,k;
     cin>>n>>k;
-    double a_max = -1;
-    vector<double> a(n); 
+    int a_max = -1;
+    vector<int> a(n); 
 
     rep(i,n){
         cin>>a[i];
         chmax(a_max,a[i]);
     }
 
+    int ok = a_max,ng = 0;
+    
+    while(abs(ok-ng) > 1 ){
 
-    cout<<ans<<endl;
+        //cout<<ok<<","<<ng<<endl;
+        double mid = (ok+ng)/2;
+
+        int cutcnt=0;
+        rep(i,n){
+            double fl = (int)(a[i]/mid);
+
+            if(fl == a[i]/mid){
+                cutcnt += fl-1;
+            }else{
+                cutcnt += fl;
+            }
+        }
+
+        //cout<<fixed<<setprecision(16)<<mid<<","<<cutcnt<<endl;
+
+        if(cutcnt <= k){
+            ok = mid;
+        }else{
+            ng = mid;
+        }
+    }
+
+
+    cout<< ok <<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
 

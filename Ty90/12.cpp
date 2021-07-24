@@ -43,7 +43,6 @@ int dy[4]={0,1,0,-1};
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
 
-/*
 chrono::system_clock::time_point  start;
 void Timer_start(){start = std::chrono::system_clock::now();}
 double Timer_end(){
@@ -51,7 +50,8 @@ double Timer_end(){
     double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
     return elapsed;
 }
-*/
+
+
 
 class Unionfind{
     public:
@@ -68,29 +68,58 @@ class Unionfind{
     bool same(int x,int y){return (root(x) == root(y));}
 };
 
+int H,W;
+bool isRed[2000][2000] = {};
+
+int conv(int r,int c){
+    return r*W + c;
+}
+
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,q;
-    cin>>n>>q;
-    Unionfind uf = Unionfind(n);
+    int q;
+    cin>>H>>W>>q;
+    rep(i,H)rep(j,W)isRed[i][j] = false;
+    Unionfind uf = Unionfind(H*W);
 
     rep(i,q){
-        int p,x,y;
-        cin>>p>>x>>y;
+        int query;cin>>query;
 
-        if(p == 0)uf.unite(x,y);
-        else {
-            if(uf.same(x,y))cout<<1<<endl;
-            else cout<<0<<endl;
+        if(query == 1){
+            int ri,ci;cin>>ri>>ci;--ri;--ci;
+            isRed[ri][ci] = true;
+
+            unordered_set<int> red;
+            rep(d,4){
+                int nr = ri + dy[d];
+                int nc = ci + dx[d];
+                if(0<=nr&&nr<H && 0<=nc&&nc<W){
+                    if(isRed[nr][nc]){
+                        red.insert(conv(nr,nc));
+                    }
+                }
+            }
+
+            for(int redi : red){
+                uf.unite(redi , conv(ri,ci));
+            }
+
+        }else{
+            int r1,c1,r2,c2;
+            cin>>r1>>c1>>r2>>c2;
+            --r1;--c1;--r2;--c2;
+            
+            if(isRed[r1][c1]&&isRed[r2][c2] && uf.same( conv(r1,c1),conv(r2,c2) ) )cout << "Yes" <<endl;
+            else cout << "No" <<endl;
+
         }
     }
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

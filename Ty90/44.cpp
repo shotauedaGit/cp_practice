@@ -43,7 +43,6 @@ int dy[4]={0,1,0,-1};
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
 
-/*
 chrono::system_clock::time_point  start;
 void Timer_start(){start = std::chrono::system_clock::now();}
 double Timer_end(){
@@ -51,22 +50,14 @@ double Timer_end(){
     double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
     return elapsed;
 }
-*/
 
-class Unionfind{
-    public:
-    
-    int n;vector<int> par;
-    Unionfind(int _n){par.resize(_n);n=_n;init();}
-    void init(){rep(i,n)par[i]=i;}
 
-    int root(int x){// 0-idx
-        if(x == par[x])return x;
-        else return (par[x] = root(par[x]));
-    }
-    void unite(int x,int y){par[ root(x) ] = root(y);}
-    bool same(int x,int y){return (root(x) == root(y));}
-};
+
+int conv(int idx,int n,int t2){
+    int nidx = idx-t2;
+    nidx += (1 + max(0,-idx+t2)/n)*n;
+    return nidx%n;
+}
 
 int main(){
 
@@ -75,20 +66,29 @@ int main(){
 
     int n,q;
     cin>>n>>q;
-    Unionfind uf = Unionfind(n);
+    vector<int> a(n);
+    rep(i,n)cin>>a[i];
 
+    int t2_cnt = 0;
     rep(i,q){
-        int p,x,y;
-        cin>>p>>x>>y;
+        int ti;cin>>ti;
+        int x,y;cin>>x>>y;
+        --x;--y;
 
-        if(p == 0)uf.unite(x,y);
-        else {
-            if(uf.same(x,y))cout<<1<<endl;
-            else cout<<0<<endl;
+        if(ti == 1){
+            int tmp = a[conv( x,n,t2_cnt )];
+            a[conv( x,n,t2_cnt )] = a[conv( y,n,t2_cnt )];
+            a[conv( y,n,t2_cnt )] = tmp;
+
+        }else if(ti==2){
+            t2_cnt++;
+        }else{
+            cout<< a[conv( x,n,t2_cnt )] <<endl;
         }
     }
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
 

@@ -10,7 +10,7 @@ template<class T,class U>bool chmax(T &a, const U &b){if(a<b){a=b;return 1;}retu
 template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}return 0;}
 
 #define rep(i,n) for(int i=0,_i=(n);i<_i;++i)
-#define rep1(i,a,b) for(int a_=(a),b_=(b),i=a_;i<b_;++i)
+#define rep1(i,a,b) for(ll a_=(a),b_=(b),i=a_;i<b_;++i)
 #define repr(i,n) for(int _i=(n),i=_i;i>0;--i)
 
 #define db(x) cerr<<#x<<" = "<<x<<" ";
@@ -51,48 +51,23 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
+    int n;
+    cin>>n;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
-
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
-
-        vis[i][j]=false;
-        d[i][j] = INF;
+    rep1(a,1,n){
+        rep1(b,1,n){
+            if(a*b >= n)break;
+            else ans++;
+        }
     }
-
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
-    }
-
-
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;

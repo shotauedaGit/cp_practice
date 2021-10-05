@@ -51,48 +51,54 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=-1,sum=0;
+    int n,c;cin>>n>>c;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    //チャンネルごとに連結する番組を接着
+    //開始時間をー１する
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    //個々のチャンネルに対して、↓をやる
 
-        vis[i][j]=false;
-        d[i][j] = INF;
+    vector<vector<int>> t(c,vector<int>(100002,0));
+    vector<int> t_sum(100002,0);
+
+    rep(i,n){
+        int si,ti,ci;
+        cin>>si>>ti>>ci;
+        --ci;
+
+        t[ci][si]++;
+        t[ci][ti]--;
     }
 
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
+    rep(i,c){
+        rep(ti,100002){
+            if(t[i][ti] == 1){
 
-    while(){
-        
-        
+                t[i][ti-1] = 1;
+                t[i][ti]   = 0;
+                t_sum[ti-1] += t[i][ti-1];
 
+            }else if(t[i][ti] == -1){
+                t_sum[ti] += t[i][ti];
+            }
+        }
     }
 
+    int ch=0;
+    rep(i,100002){
+        ch += t_sum[i];
+        chmax(ans,ch);
+    }
 
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;

@@ -51,48 +51,42 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    int n,m;
+    cin>>n;
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    vector<bool> isprime(n,true);isprime[0]=false;isprime[1]=false;
+    vector<int> prime,a(n,-1);
 
-        vis[i][j]=false;
-        d[i][j] = INF;
+    for(int i=2;i < (int)(sqrt(n)+1);++i){
+        if(isprime[i]!=true)continue;
+        int c=i*2;
+        while(c <= n){isprime[c]=false;c+=i;}
+    }
+    for(int i=2;i<=n;++i)if(isprime[i])prime.emplace_back(i);
+
+    for(int i=0;i<n;++i){
+        int tgt=i+1;
+        int cnt=0;
+
+        int idx=0;
+        while(tgt>1){
+            while(tgt%prime[idx]==0){tgt/=prime[idx];cnt++;}
+            ++idx;
+        }
+        a[i]=cnt+1;
     }
 
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
-    }
-
-
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    for(int ai:a)cout<<ai<<" ";
+    cout<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;

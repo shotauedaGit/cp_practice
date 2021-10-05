@@ -28,6 +28,7 @@ template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}retu
 #define fi first
 
 typedef long long ll;
+typedef long double ld;
 
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
@@ -39,31 +40,35 @@ ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
-template<int mod=1000000007>
+int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
+int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
+
+chrono::system_clock::time_point  start;
+void Timer_start(){start = std::chrono::system_clock::now();}
+double Timer_end(){
+    auto end = std::chrono::system_clock::now();
+    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
+    return elapsed;
+}
+
 class mInt{
     public:
-    int x;
+    int x,mod;
     mInt() : x(0){}
 
     int absmod(ll in){
         if(in>=0)return in%mod;
         else return (in%mod)+mod;
     }
-    mInt(ll in){x=absmod(in);}
-    mInt(ll in,int m){x=absmod(in);mod=m;}
-    ~mInt(){}
+    mInt(ll in){cout<<1<<endl; this->mod=17;x=absmod(in);}
+    mInt(ll in,ll m){ this->mod=m;x=absmod(in);}
 
+    ~mInt(){}
 
     friend ostream &operator<<(ostream &os, const mInt &p) {return os << p.x;}
     friend istream &operator>>(istream &is, mInt &a) {
         int64_t t; is >> t;
-        a = mInt<mod>(t); return(is);
-    }
-
-    void errMsg(const mInt &p){
-        if(p.mod != this->mod){
-            cerr<<"[mInt]:: each mod values are different. "<<#(p.mod)<<","<<#(this->mod)<<endl;
-        }
+        a = mInt(t); return(is);
     }
 
     mInt &operator+=(const mInt p){
@@ -82,7 +87,7 @@ class mInt{
     mInt &operator=(const ll p){x = absmod(p);return *this;}
 
     mInt pow(ll n)const{
-        mInt<mod> ret(1),tmp(x);
+        mInt ret(1,mod),tmp(x,mod);
         if(n==0)return ret;
         else if(n<0)n+=mod-1;
 
@@ -97,7 +102,7 @@ class mInt{
     mInt operator-(const mInt &p)const{return mInt(*this) -= p;}
     
     mInt operator*(const mInt &p)const{return mInt(*this) *= p;}
-    mInt operator*(const ll &p)const{mInt<mod> mp;mp.x=p;return mInt(*this) *= mp;}
+    mInt operator*(const ll &p)const{mInt mp;mp.x=p;return mInt(*this) *= mp;}
 
     mInt operator/(const mInt &p)const{return mInt(*this) /= p;}
 
@@ -109,78 +114,22 @@ class mInt{
     bool operator<=(const mInt &p)const{return x <= p.x;}
 };
 
-template<int mod=1000000007>
-class mFact{
-    public:
-    int n;
-    mFact() : n(1000){prepareFactArray();}
-    mFact(int _n) : n(_n){prepareFactArray();}
-
-    vector<mInt<mod>>fac;
-    vector<mInt<mod>>fiv;
-
-    void prepareFactArray(){
-        fac.resize(n+10);
-        fiv.resize(n+10);
-
-        fac[0]=1;
-        for(int i=1;i<=n;++i)fac[i] = fac[i-1]*i;
-
-        fiv[n]=fac[n].pow(-1);
-        for(int i=n;i>=0;--i)fiv[i-1] = fiv[i]*i;
-    }
-
-    mInt<mod> nCr(ll _n,ll r){
-        mInt<mod> p(1),q(1),z(0);
-        if(r > _n)return z;
-
-        r=min(r,_n-r);
-        if(_n > n){
-            for(ll i=0;i<r;++i){p*=_n-i;q*=r-i;}
-            return p/q;
-        }
-        else return fac[_n]*fiv[r]*fiv[_n-r];
-    }
-    //*/
-};
-
 int main(){
-    const int mod=1000000007;
-    mInt<MOD> m2(2);
-    //vector<mInt<mod>>a(10);
 
-    int n,a,b;
-    cin>>n>>a>>b;
-    mFact<> f(200000);
+    bool flag=false;
+    ll ans=0,sum=0;
 
-    cout<< ((m2.pow(n)-1) - f.nCr(n,a) - f.nCr(n,b));
+    ll n,m;cin>>n>>m;
 
-    /*
-    ll a=1,b=1;
-    while(a != -1){
-        cin>>a>>b;
+    mInt D(10,(int)(m*m)); 
+    D = D.pow(n);
 
-        cout<<" fac[x]="<<f.fac[a];
-        cout<<" fac[y]="<<f.fac[b];
+    cout<<(D.x)/m <<endl;
 
-        cout<<" xCy = "<<(f.nCr(a,b))<<'\n';
-    }
-    */
+    //cout <<fixed<<setprecision(16)<< << endl;
 
-    /*
-    rep(i,10)cin>>a[i];
-    ll a0=a[0].x;
-    ll a1=a[1].x;
-
-    cout<<'\n'<<a[0]<<"+"<<a[1]<<"="<<a[0]+a[1]<<" exact: "<< a0+a1;ln;
-    cout<<a[0]<<"*"<<a[1]<<"="<<a[0]*a[1]<<" exact: "<< a0*a1;ln;
-    cout<<a[0]<<"-"<<a[1]<<"="<<a[0]-a[1]<<" exact: "<< a0-a1;ln;
-    cout<<a[0]<<"**"<<a[1]<<"="<< a[0].pow(a[1].x);ln;
-    cout<<a[0]<<"/"<<a[1]<<"="<< a[0]/a[1] <<" (a[0]/a[1])*a[1] = "<<((a[0]/a[1])*a[1]);ln;
-
-    sort(all(a));
-    for(auto ai:a)cout<<ai.x<<" ";ln;
-    */
+    //if(flag)cout << "Yes" <<endl;
+    //else cout << "No" <<endl;
 
     return 0;
 }

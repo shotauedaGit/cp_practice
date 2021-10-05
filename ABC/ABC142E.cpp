@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define INF 100001  //int32_t
+#define INF 2147483647  //int32_t
 #define MOD 1000000007
 #define MOD2 
 
@@ -14,6 +14,10 @@ using namespace std;
 typedef long long ll;
 typedef pair<int,int> pii;
 typedef pair<ll,ll> pll;
+
+
+template<class T,class U>bool chmax(T &a, const U &b){if(a<b){a=b;return 1;}return 0;}
+template<class T,class U>bool chmin(T &a, const U &b){if(b<a){a=b;return 1;}return 0;}
 
 int main(){
 
@@ -44,22 +48,23 @@ int main(){
     for(int i=0;i<=m;++i)dp[0][i]=0;
 
 
-    for (int j = 1; j <= m; j++){
-        for (int i = 0; i < (1<<n); i++){
+    for (int i = 0; i < (1<<n); i++){
+        for (int j = 1; j <= m; j++){
 
             int newbit = i | keys[j-1].second;
-            cout <<i<<" || "<<keys[j-1].second<<"="<<newbit<< endl;
+            //cout <<i<<" || "<<keys[j-1].second<<"="<<newbit<< endl;
+            //cout <<dp[newbit][j-1]<<"  < or >  "<<dp[i][j-1]<<"+"<<keys[j-1].first<< endl;
 
-            cout <<dp[newbit][j-1]<<"  < or >  "<<dp[i][j-1]<<"+"<<keys[j-1].first<< endl;
-
-            dp[newbit][j] = min( dp[newbit][j-1] , dp[i][j-1]+keys[j-1].first );
-
-            cout << "dp"<<newbit<<"_"<<j<<" = "<<dp[newbit][j]<< endl;
+            chmin(dp[i][j],dp[i][j-1]);
+            chmin(dp[newbit][j],min( (ll)dp[newbit][j-1] , (ll)dp[i][j-1]+keys[j-1].first ));
+            
+            //cout << "dp"<<newbit<<"_"<<j<<" = "<<dp[newbit][j]<< endl;
         }
         
     }
 
 
+    /*
     puts("");
     for (int i = 0; i < (1<<n); i++){
         bitset<4> b = i;
@@ -71,10 +76,11 @@ int main(){
         }
         puts("");
     }
-    
+    */
 
     //cout <<fixed<<setprecision(16)<< << endl;
     
+    ans = dp[(1<<n)-1][m];
     if(ans == INF)cout << -1 << endl;
     else cout << ans << endl;
 

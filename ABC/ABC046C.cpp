@@ -51,51 +51,43 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    int n;cin>>n;
+    ll t=1,a=1;
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    rep(i,n){
+        ll ti,ai;cin>>ti>>ai;
+        ll ratio;
 
-        vis[i][j]=false;
-        d[i][j] = INF;
-    }
-
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
+        if(ti >= t && ai >= a){
+            t = ti;
+            a = ai;
+        }else{
+            ratio = max( (t+ti-1)/ti , (a+ai-1)/ai );
+            
+            t = ti*ratio;
+            a = ai*ratio;
+        }
+        //cout<<t<<" "<<a<<endl;
     }
 
 
 
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+
+    cout<<(t+a)<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

@@ -51,51 +51,65 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    ll n;
+    int x,m;
+    cin>>n>>x>>m;--n;
+    
+    vector<int> a,sa;
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    unordered_map<int,int> app;
+    
+    int loop_bg=-1,loop_len=-1,i=0;
+    ll ai = x;
 
-        vis[i][j]=false;
-        d[i][j] = INF;
+    while(true){
+
+        if(app.find(ai) != app.end()){
+            loop_bg = app[ai];
+            loop_len = a.size() - loop_bg;
+            break;
+        }
+
+        if(a.size() > 0)sa.emplace_back(ai + a.back());
+        else sa.emplace_back(ai);
+
+        a.emplace_back(ai);
+        app.insert(ai,i);
+
+        ai = (ai*ai)%m;++i;
+    }
+    ll loop_sum = sa[loop_bg-1] + sa[sa.size()-1];
+
+
+    if(loop_bg > n){
+        ans = sa[n];
+    }else{
+        n -= loop_bg;
+        int idx = n%loop_len;
+        int loop_cnt = n/loop_len;
+
+
     }
 
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
-    }
 
 
 
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

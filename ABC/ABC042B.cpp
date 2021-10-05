@@ -51,48 +51,39 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
-
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
-
-        vis[i][j]=false;
-        d[i][j] = INF;
+    int n,l;
+    cin>>n>>l;
+    vector<string> vs(n);
+    rep(i,n){
+        cin>>vs[i];
     }
 
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
+    sort(all(vs));
 
-    while(){
-        
-        
+    /*
+    rep(i,n-1)rep1(j,i+1,n){
+        if(vs[i] >= vs[j]){
 
+            string tmp = vs[i];
+            vs[i] = vs[j];
+            vs[j] = tmp;
+
+        }
     }
+    */
 
 
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    rep(i,n)cout<<vs[i];
+    cout<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;

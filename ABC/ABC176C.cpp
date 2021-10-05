@@ -60,8 +60,15 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
+    int n;
     cin>>n;
+
+    int tmp_m=-1,ai;
+    rep(i,n){
+        int ai;cin>>ai;
+        chmax(tmp_m,ai);
+        ans += tmp_m - ai;
+    }
 
 
     cout<<ans<<endl;

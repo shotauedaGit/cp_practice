@@ -51,51 +51,34 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
 
-int d[1010][1010] = {};
-int g[1010][1010] = {};
 
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
+
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=-INF,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    int n;string s;
+    cin>>n>>s;
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    int x=0;chmax(ans,x);
 
-        vis[i][j]=false;
-        d[i][j] = INF;
-    }
+    rep(i,n){
+        if(s[i] == 'I')++x;
+        else  --x;
 
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
+        chmax(ans,x);
     }
 
 
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    cout<<ans<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
+
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

@@ -51,48 +51,37 @@ double Timer_end(){
     return elapsed;
 }
 
-int H,W;
-int Ch,Cw,Dh,Dw;
-
-int d[1010][1010] = {};
-int g[1010][1010] = {};
-
-bool isOn(int i,int j){
-    return (0<=i && i<H && 0<=j && j<W);
-}
 
 int main(){
+
     bool flag=false;
-    ll ans=INF,sum=0;
+    ll ans=0,sum=0;
 
-    cin>>H>>W;
-    cin>>Ch>>Cw>>Dh>>Dw;
-    --Ch;--Cw;--Dh;--Dw;
+    int n;cin>>n;
+    vector<bool> v(10001,false);
 
-    rep(i,H)rep(j,W){
-        char gij;
-        cin>>gij;
-        if(gij == '.')g[i][j]=1;
-        else g[i][j]=0;
+    int a=6,b=10,c=15;
 
-        vis[i][j]=false;
-        d[i][j] = INF;
+    int ai=a;while(ai <= 10000){v[ai]=true;ai+=a;}
+    
+    ai=b;while(ai <= 10000){v[ai]=true;ai+=b;}
+    
+    ai=c;while(ai <= 10000){v[ai]=true;ai+=c;}
+
+    int cnt=0;
+
+    cout<<a<<" "<<b<<" "<<c<<" ";
+    v[a]=false;v[b]=false;v[c]=false;
+
+    rep1(i,1,10001){
+        if(v[i]){
+            cout<<i<<" ";
+            cnt++;
+        }
+
+        if(cnt>= n-3)break;
     }
-
-    stack< pair<P,int> > st;
-    vis[Ch][Cw] = true;
-    d[Ch][Cw] = 0;
-
-    while(){
-        
-        
-
-    }
-
-
-
-    if(ans == INF)cout<<-1<<endl;
-    else cout<<ans<<endl;
+    ln;
 
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;

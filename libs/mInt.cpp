@@ -60,11 +60,6 @@ class mInt{
         a = mInt<mod>(t); return(is);
     }
 
-    void errMsg(const mInt &p){
-        if(p.mod != this->mod){
-            cerr<<"[mInt]:: each mod values are different. "<<#(p.mod)<<","<<#(this->mod)<<endl;
-        }
-    }
 
     mInt &operator+=(const mInt p){
         if((x += p.x) >= mod)x -= mod;
@@ -123,7 +118,7 @@ class mFact{
         fac.resize(n+10);
         fiv.resize(n+10);
 
-        fac[0]=1;
+        fac[0] = 1;
         for(int i=1;i<=n;++i)fac[i] = fac[i-1]*i;
 
         fiv[n]=fac[n].pow(-1);

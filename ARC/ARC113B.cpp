@@ -35,7 +35,7 @@ typedef pair<int,P> iP;
 typedef pair<P,P> PP;
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
+ll lcm(ll a,ll b){return (a/gcd(a,b))*b;}
 
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
@@ -51,10 +51,69 @@ double Timer_end(){
     return elapsed;
 }
 
+template<int mod=1000000007>
+class mInt{
+    public:
+    int x;
+    mInt() : x(0){}
+
+    int absmod(ll in){
+        if(in>=0)return in%mod;
+        else return (in%mod)+mod;
+    }
+    mInt(ll in){x=absmod(in);}
+    mInt(ll in,int m){x=absmod(in);mod=m;}
+    ~mInt(){}
 
 
+    friend ostream &operator<<(ostream &os, const mInt &p) {return os << p.x;}
+    friend istream &operator>>(istream &is, mInt &a) {
+        int64_t t; is >> t;
+        a = mInt<mod>(t); return(is);
+    }
 
+    mInt &operator+=(const mInt p){
+        if((x += p.x) >= mod)x -= mod;
+        return *this;
+    }
 
+    mInt &operator-=(const mInt p){
+        if((x -= p.x) < 0)x += mod;
+        return *this;
+    }
+
+    mInt &operator*=(const mInt p){x=(int)((ll)x*p.x%mod); return *this;}
+    mInt &operator/=(const mInt p){x=(int)((ll)x*(p.pow(-1)).x%mod); return *this; }
+    //mInt &operator=(const mInt p){x = p.x;return *this;}
+    mInt &operator=(const ll p){x = absmod(p);return *this;}
+
+    mInt pow(ll n)const{
+        mInt<mod> ret(1),tmp(x);
+        if(n==0)return ret;
+        else if(n<0)n+=mod-1;
+
+        while(n>1){
+            if(n%2==0){n/=2;tmp*=tmp;}
+            else {--n;ret*=tmp;}
+        }
+        ret *= tmp;return ret;
+    }
+
+    mInt operator+(const mInt &p)const{return mInt(*this) += p;}
+    mInt operator-(const mInt &p)const{return mInt(*this) -= p;}
+    
+    mInt operator*(const mInt &p)const{return mInt(*this) *= p;}
+    mInt operator*(const ll &p)const{mInt<mod> mp;mp.x=p;return mInt(*this) *= mp;}
+
+    mInt operator/(const mInt &p)const{return mInt(*this) /= p;}
+
+    bool operator==(const mInt &p)const{return x == p.x;}
+    bool operator!=(const mInt &p)const{return x != p.x;}
+    bool operator>(const mInt &p)const{return x > p.x;}
+    bool operator<(const mInt &p)const{return x < p.x;}
+    bool operator>=(const mInt &p)const{return x >= p.x;}
+    bool operator<=(const mInt &p)const{return x <= p.x;}
+};
 
 
 
@@ -63,16 +122,21 @@ int main(){
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int a,b,c;
+    cin>>a>>b>>c;
+    mInt<4> mb(b);
+    mInt<10> ma(a);
+    mb = mb.pow(c);
 
+    int bc_mod4 = mb.x;
+    bc_mod4 = (bc_mod4+3)%4;
 
-    cout<<ans<<endl;
+    rep(i,bc_mod4) ma *= mInt<10>(a);
+
+    cout<<ma<<endl;
 
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }

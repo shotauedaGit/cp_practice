@@ -1,0 +1,21 @@
+@echo off
+cargo run --release --bin tester a < in\0030.txt > out.txt
+cargo run --release --bin tester a < in\0031.txt > out.txt
+cargo run --release --bin tester a < in\0032.txt > out.txt
+cargo run --release --bin tester a < in\0033.txt > out.txt
+cargo run --release --bin tester a < in\0034.txt > out.txt
+cargo run --release --bin tester a < in\0035.txt > out.txt
+cargo run --release --bin tester a < in\0036.txt > out.txt
+cargo run --release --bin tester a < in\0037.txt > out.txt
+cargo run --release --bin tester a < in\0038.txt > out.txt
+cargo run --release --bin tester a < in\0039.txt > out.txt
+cargo run --release --bin tester a < in\0040.txt > out.txt
+cargo run --release --bin tester a < in\0041.txt > out.txt
+cargo run --release --bin tester a < in\0042.txt > out.txt
+cargo run --release --bin tester a < in\0043.txt > out.txt
+cargo run --release --bin tester a < in\0044.txt > out.txt
+cargo run --release --bin tester a < in\0045.txt > out.txt
+cargo run --release --bin tester a < in\0046.txt > out.txt
+cargo run --release --bin tester a < in\0047.txt > out.txt
+cargo run --release --bin tester a < in\0048.txt > out.txt
+cargo run --release --bin tester a < in\0049.txt > out.txt

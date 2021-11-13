@@ -1,7 +1,10 @@
 import java.util.*;
 
-class tmpl{
-    public static void main(String[] args){
-        System.out.println("Hello,java!");
+public class Main {
+    public static int MOD = 1000000007;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
     }
 }

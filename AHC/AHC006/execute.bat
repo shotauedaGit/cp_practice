@@ -1,0 +1,12 @@
+@echo off
+g++ AHC006.cpp
+a in\0000.txt
+a in\0001.txt
+a in\0002.txt
+a in\0003.txt
+a in\0004.txt
+a in\0005.txt
+a in\0006.txt
+a in\0007.txt
+a in\0008.txt
+a in\0009.txt

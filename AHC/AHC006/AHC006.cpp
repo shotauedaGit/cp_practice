@@ -33,13 +33,11 @@ typedef long double ld;
 typedef pair<int,int> P;
 typedef pair<int,P> iP;
 typedef pair<P,P> PP;
-
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
 ll lcm(ll a,ll b){return (a/gcd(a,b))*b;}
 
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
-
 int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
 int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
 
@@ -52,18 +50,62 @@ double Timer_end(){
 }
 
 
+//typedef int score_type;
+typedef long long score_type;
+//typedef float score_type;
+
+#define isDBG true
+#define errPrint true
+
+class param{
+    public:
+
+};
+
+class state{
+    public:
+    ll score=0;
+    //double score;
+};
 
 class AHC006{
-    AHC006(){
+    public:
+    ifstream in_file;
+    ofstream out_file,score_list;
+
+    state s_best;
+    param p;
+
+    AHC006(param &_p){
+        score_list.open("score.txt",std::ios::app);
+        p = _p;
+
+        init();
+    }
+
+    void init(){
 
     }
-}
+    void s_init(state &s){
+
+    }
+
+    void modify(state &s,param &p){
+
+    }
+
+    score_type calc_score(state &s){
+        
+    }
+
+
+};
 
 int main(){
     Timer_start();
 
     int n,m;
-    cin>>n;
+    //AHC006 p;
 
     cerr<<"time: "<<Timer_end()<<endl;
 

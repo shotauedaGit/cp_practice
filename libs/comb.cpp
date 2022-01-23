@@ -51,40 +51,77 @@ double Timer_end(){
     return elapsed;
 }
 
+void perm(int n,int r,vector<int> gr){
+    vector<int> combi;
+
+    for(int i=0;i<n;++i){
+        if(gr[i] == 1)combi.emplace_back(i);
+    }
+    cout<<"combi.size ="<<combi.size()<<endl;
+
+
+    do{ 
+        cout<<"(";
+        for(int i=0;i<r;++i)cout<<combi[i]<<" ";
+        cout<<") ";
+
+    }while(next_permutation(all(combi)));
+}
+
+
+void comb(int n,int r,vector<int> gr,int slct,int psd){
+
+    if(slct == r){
+        for(int i=0;i<n;++i){
+            // DBG
+            /*
+            if(gr[i] == 1)cout<<"# ";
+            else cout<<"  ";
+            */
+            //if(gr[i] == 1)cout<<i<<" ";
+            //cout<<gi<<",";
+            
+        }
+
+        perm(n,r,gr);
+        cout<<endl;
+        return;
+
+    }else{
+        if(psd >= n) return; //r個選んでいない場合がいきつくところ
+
+
+        gr[psd] = 1;
+        comb(n,r,gr,slct+1,psd+1);
+
+        gr[psd] = 0;
+        comb(n,r,gr,slct,psd+1);
+        
+    }
+
+}
+
+
+
 
 int main(){
+
     bool flag=false;
     ll ans=0,sum=0;
-    int n;cin>>n;
 
-    vector<char> a(n);
-    rep(i,n){
-        cin>>a[i];
-    }
+    int n,r;
+    cin>>n>>r;
+    vector<int> a(n,0);
 
-    a.emplace_back('a');
-    int cnt=1;
-    vector<int> c;
-    for(int i=1;i<n;++i){
-        if(a[i-1] == a[i]){
-            ++cnt;
-        }else{
-            c.emplace_back(cnt);
-            cnt=1;
-        }
-    }
-    c.emplace_back(cnt);
+    cout<<endl;
+    comb(n,r,a,0,0);
 
-    ans = (ll)n*(n+1)/2;
-    for(int ci:c){
-        ll ni = ci;
-        //cerr<<(ni*(ni+1))/2<<" ";
-        ans -= (ni*(ni+1))/2;
-    }
 
-    cout<<ans<<endl;
+
+    //cout<<ans<<endl;
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
+
     return 0;
 }

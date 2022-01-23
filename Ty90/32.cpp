@@ -35,7 +35,7 @@ typedef pair<int,P> iP;
 typedef pair<P,P> PP;
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
+ll lcm(ll a,ll b){return (a/gcd(a,b))*b;}
 
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
@@ -51,69 +51,66 @@ double Timer_end(){
     return elapsed;
 }
 
-ll a[10][10]={};
-unordered_set<int> ng;
 
-vector<int> t_arr(vector<int> p1,int offset){
-    vector<int> ts;
-    do{
-        bool cont=false;
-        int t = 0;
-        rep(i , p1.size()-1){
-            int ngi = p1[offset+i]*10 + p1[offset+i+1];
-            if(ng.find(ngi) != ng.end()){cont=true;break;}
-        }
-        if(cont)continue;
-        rep(i,p1.size())t += a[offset+p1[i]][offset+i];
-        ts.emplace_back(t);
 
-    }while(next_permutation(all(p1)));
-    return ts;
-}
-
-//所要時間と走順をpairにして返す仕様にする
-//mainない、前半後半の境目にNGpairがいたら、統合の際に追加しない。
 
 int main(){
-
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n;cin>>n;
-    rep(i,n)rep(j,n){
+    int n,m;
+    int a[10][10]={};
+    vector<P> p;
+
+    cin>>n;
+    rep(i,n){
+        rep(j,n){
         cin>>a[i][j];
-    }
-
-    int m;cin>>m;
-    rep(i,m){
-        int x,y;cin>>x>>y;
-        ng.insert(10*x + y);
-        ng.insert(10*y + x);
-    }
-
-    vector<int> p1(n/2),p2(n-(n/2));
-    rep(i,n/2)p1[i]=i;
-    rep(i,n-(n/2))p2[i]=i;
-
-    //変える
-    vector<int> ts1 = t_arr(p1,0);
-    vector<int> ts2 = t_arr(p2,n/2);
-
-    vector<int> ts;
-    rep(i , ts1.size()){
-        rep(j , ts2.size()){
-
-            cout<<ts1[i]<<" "<<ts2[j]<<endl;
-            if(){
-                ts.emplace_back(ts1[i] + ts2[j]);
-            }
         }
     }
 
-    sort(all(ts));
-    if(ts.empty())cout<<-1<<endl;
-    else cout<<ts[0]<<endl;
 
+
+    cin>>m;
+    int hsh_tb[10000] = {};
+    rep(i,m){
+        int xi,yi;
+        cin>>xi>>yi;
+        --xi;--yi;
+
+        hsh_tb[xi + yi*100] = 1;
+        hsh_tb[yi + xi*100] = 1;
+    }
+
+    vector<int> ordr;
+    rep(i,n)ordr.emplace_back(i);
+
+    int ti=0,tmin=INF;
+    int cnt=0;
+    do{ 
+        ++cnt;
+        //cout<<a[0][ordr[0]]<<endl;
+        ti = a[0][ordr[0]];
+        bool ok=true;
+
+        for(int i=1;i<n;++i){
+
+            int hsh = ordr[i-1] + ordr[i]*100;
+            if(hsh_tb[hsh] == 1){
+                ok = false;
+                continue;
+            }
+
+            ti += a[i][ordr[i]];
+        }
+
+        if(ok)chmin(tmin,ti);
+    }while(next_permutation(all(ordr)));
+
+    if(tmin == INF)cout<<-1<<endl;
+    else cout<<tmin<<endl;
+
+    db(cnt);
     //cout <<fixed<<setprecision(16)<< << endl;
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;

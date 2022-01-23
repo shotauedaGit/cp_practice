@@ -35,30 +35,43 @@ typedef pair<int,P> iP;
 typedef pair<P,P> PP;
 
 ll gcd(ll a,ll b){return b?gcd(b,a%b):a;}
-ll lcm(ll a,ll b){return (a*b)/gcd(a,b);}
+ll lcm(ll a,ll b){return (a/gcd(a,b))*b;}
 
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
 
+int dx8[8] ={1,1,0,-1,-1,-1, 0, 1};
+int dy8[8] ={0,1,1, 1, 0,-1,-1,-1};
+
+chrono::system_clock::time_point  start;
+void Timer_start(){start = std::chrono::system_clock::now();}
+double Timer_end(){
+    auto end = std::chrono::system_clock::now();
+    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count(); //処理に要した時間をミリ秒に変換
+    return elapsed;
+}
 
 
 
+bool isOute(int r,int c,int dr,int dc){
+    if(r+c == dr+dc || r-c == dr-dc || 3 >= abs(dc-c)+abs(dr-r)) return true;
+    else return false;
+}
 
 int main(){
 
     bool flag=false;
     ll ans=0,sum=0;
 
-    int n,m;
-    cin>>n;
+    int r1,c1,r2,c2;
+    cin>>r1>>c1>>r2>>c2;
+
+    
 
 
     cout<<ans<<endl;
-
     //cout <<fixed<<setprecision(16)<< << endl;
-
     //if(flag)cout << "Yes" <<endl;
     //else cout << "No" <<endl;
-
     return 0;
 }
